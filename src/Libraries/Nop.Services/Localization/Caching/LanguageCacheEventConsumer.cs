@@ -16,7 +16,7 @@ namespace Nop.Services.Localization.Caching
         {
             Remove(NopLocalizationDefaults.LocaleStringResourcesAllPublicCacheKey, entity);
             Remove(NopLocalizationDefaults.LocaleStringResourcesAllAdminCacheKey, entity);
-            Remove(NopLocalizationDefaults.LocaleStringResourcesAllCacheKey, entit));
+            Remove(NopLocalizationDefaults.LocaleStringResourcesAllCacheKey, entity);
             RemoveByPrefix(NopLocalizationDefaults.LocaleStringResourcesByNamePrefix, entity);
         }
     }
