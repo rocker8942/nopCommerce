@@ -810,7 +810,7 @@ namespace Nop.Plugin.Tax.Avalara.Services
 
                 //delete tax categories
                 _taxCategoryRepository.Delete(taxCategory => categoriesIds.Contains(taxCategory.Id));
-                _staticCacheManager.RemoveByPrefix(NopEntityCacheDefaults<TaxCategory>.AllPrefix);
+                _staticCacheManager.RemoveByPrefix(NopEntityCacheDefaults<TaxCategory>.Prefix);
 
                 //delete generic attributes
                 _genericAttributeRepository
