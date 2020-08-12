@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace Nop.Core.Tests.Domain.Common
 {
     [TestFixture]
-    public class AddressTests:BaseNopTest
+    public class AddressTests : BaseNopTest
     {
         [Test]
         public void CanCloneAddress()
@@ -32,7 +32,7 @@ namespace Nop.Core.Tests.Domain.Common
                 CreatedOnUtc = new DateTime(2010, 01, 01),
             };
 
-            var addressService = GetService<IAddressService>(); //new AddressService(new AddressSettings(), new CachingSettings(),  new Mock<IAddressAttributeParser>().Object, new Mock<IAddressAttributeService>().Object, new Mock<ICountryService>().Object, new Mock<IEventPublisher>().Object, new FakeRepository<Address>().GetRepository(), new Mock<IStateProvinceService>().Object);
+            var addressService = GetService<IAddressService>();
 
             var newAddress = addressService.CloneAddress(address);
             newAddress.Should().NotBeNull();

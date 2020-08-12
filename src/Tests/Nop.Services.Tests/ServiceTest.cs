@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Nop.Services.Tests
 {
     [TestFixture]
-    public abstract class ServiceTest: BaseNopTest
+    public abstract class ServiceTest : BaseNopTest
     {
         protected ServiceTest()
         {

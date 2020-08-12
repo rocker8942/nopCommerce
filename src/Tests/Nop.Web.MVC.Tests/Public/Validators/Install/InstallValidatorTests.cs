@@ -25,7 +25,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Install
                 AdminEmail = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.AdminEmail, model);
-            model.AdminEmail = "";
+            model.AdminEmail = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.AdminEmail, model);
         }
 
@@ -59,7 +59,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Install
             //we know that password should equal confirmation password
             model.ConfirmPassword = model.AdminPassword;
             _validator.ShouldHaveValidationErrorFor(x => x.AdminPassword, model);
-            model.AdminPassword = "";
+            model.AdminPassword = string.Empty;
             //we know that password should equal confirmation password
             model.ConfirmPassword = model.AdminPassword;
             _validator.ShouldHaveValidationErrorFor(x => x.AdminPassword, model);
@@ -85,7 +85,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Install
                 ConfirmPassword = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.ConfirmPassword, model);
-            model.ConfirmPassword = "";
+            model.ConfirmPassword = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.ConfirmPassword, model);
         }
 

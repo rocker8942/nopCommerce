@@ -39,7 +39,7 @@ namespace Nop.Services.Tests.Stores
             };
 
             _storeService.ContainsHostValue(store, null).Should().BeFalse();
-            _storeService.ContainsHostValue(store, "").Should().BeFalse();
+            _storeService.ContainsHostValue(store, string.Empty).Should().BeFalse();
             _storeService.ContainsHostValue(store, "store.com").Should().BeFalse();
             _storeService.ContainsHostValue(store, "yourstore.com").Should().BeTrue();
             _storeService.ContainsHostValue(store, "yoursTore.com").Should().BeTrue();

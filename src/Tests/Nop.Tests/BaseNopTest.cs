@@ -96,8 +96,6 @@ namespace Nop.Tests
             //add hosting configuration parameters
             services.AddSingleton(new HostingConfig());
 
-            #region Mocked
-
             var hostApplicationLifetime = new Mock<IHostApplicationLifetime>();
             services.AddSingleton(hostApplicationLifetime.Object);
 
@@ -111,7 +109,7 @@ namespace Nop.Tests
             webHostEnvironment.Setup(p => p.ApplicationName).Returns("nopCommerce");
             services.AddSingleton(webHostEnvironment.Object);
 
-            var httpContext = new DefaultHttpContext {Request = {Headers = {{HeaderNames.Host, "127.0.0.1"}}}};
+            var httpContext = new DefaultHttpContext { Request = { Headers = { { HeaderNames.Host, NopTestsDefaults.HostIpAddress } } } };
 
             var httpContextAccessor = new Mock<IHttpContextAccessor>();
             httpContextAccessor.Setup(p => p.HttpContext).Returns(httpContext);
@@ -123,7 +121,7 @@ namespace Nop.Tests
 
             services.AddSingleton(actionContextAccessor.Object);
 
-            var urlHelperFactory=new Mock<IUrlHelperFactory>();
+            var urlHelperFactory = new Mock<IUrlHelperFactory>();
 
             urlHelperFactory.Setup(x => x.GetUrlHelper(It.IsAny<ActionContext>()))
                 .Returns(new UrlHelper(actionContextAccessor.Object.ActionContext));
@@ -134,8 +132,6 @@ namespace Nop.Tests
             var dataDictionary = new TempDataDictionary(httpContextAccessor.Object.HttpContext, new Mock<ITempDataProvider>().Object);
             tempDataDictionaryFactory.Setup(f => f.GetTempData(It.IsAny<HttpContext>())).Returns(dataDictionary);
             services.AddSingleton(tempDataDictionaryFactory.Object);
-
-            #endregion
 
             services.AddSingleton<ITypeFinder>(typeFinder);
 
@@ -292,14 +288,12 @@ namespace Nop.Tests
             //event consumers
             var consumers = typeFinder.FindClassesOfType(typeof(IConsumer<>)).ToList();
             foreach (var consumer in consumers)
+            foreach (var findInterface in consumer.FindInterfaces((type, criteria) =>
             {
-                foreach (var findInterface in consumer.FindInterfaces((type, criteria) =>
-                {
-                    var isMatch = type.IsGenericType && ((Type)criteria).IsAssignableFrom(type.GetGenericTypeDefinition());
-                    return isMatch;
-                }, typeof(IConsumer<>)))
-                    services.AddTransient(findInterface, consumer);
-            }
+                var isMatch = type.IsGenericType && ((Type)criteria).IsAssignableFrom(type.GetGenericTypeDefinition());
+                return isMatch;
+            }, typeof(IConsumer<>)))
+                services.AddTransient(findInterface, consumer);
 
             services.AddSingleton<IInstallationService, CodeFirstInstallationService>();
 
@@ -316,7 +310,6 @@ namespace Nop.Tests
                         // define the assembly containing the migrations
                         .ScanIn(mAssemblies).For.Migrations());
 
-
             services.AddTransient<IStoreContext, WebStoreContext>();
             services.AddTransient<IWorkContext, WebWorkContext>();
 
@@ -327,11 +320,8 @@ namespace Nop.Tests
             _serviceProvider.GetService<INopDataProvider>().CreateDatabase(null);
             _serviceProvider.GetService<INopDataProvider>().InitializeDatabase();
             
-            var defaultEmail = "test@nopCommerce.com";
-            var defaultPassword = "test_password";
-
-            _serviceProvider.GetService<IInstallationService>().InstallRequiredData(defaultEmail, defaultPassword);
-            _serviceProvider.GetService<IInstallationService>().InstallSampleData(defaultEmail);
+            _serviceProvider.GetService<IInstallationService>().InstallRequiredData(NopTestsDefaults.AdminEmail, NopTestsDefaults.AdminPassword);
+            _serviceProvider.GetService<IInstallationService>().InstallSampleData(NopTestsDefaults.AdminEmail);
         }
 
         public T GetService<T>()
@@ -371,17 +361,15 @@ namespace Nop.Tests
         {
             public void SignIn(Customer customer, bool isPersistent)
             {
-
             }
 
             public void SignOut()
             {
-
             }
 
             public Customer GetAuthenticatedCustomer()
             {
-                return _serviceProvider.GetService<ICustomerService>().GetCustomerByEmail("test@nopCommerce.com");
+                return _serviceProvider.GetService<ICustomerService>().GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             }
         }
 

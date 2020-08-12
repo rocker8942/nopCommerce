@@ -16,9 +16,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators
         {
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
 
-            _validator = new TestValidator {
-				v => v.RuleFor(x => x.CreditCard).IsCreditCard()
-			};
+            _validator = new TestValidator { v => v.RuleFor(x => x.CreditCard).IsCreditCard() };
         }
 
         [Test]

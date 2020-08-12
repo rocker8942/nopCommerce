@@ -181,8 +181,8 @@ namespace Nop.Services.Tests.Shipping
                     Quantity = 1,
                     ProductId = product.Id
                 }, product));
-
             }
+
             _shippingService.GetDimensions(items, out width, out length, out height);
 
             Math.Round(length, 2).Should().Be(2);

@@ -18,7 +18,7 @@ using Nop.Services.Customers;
 using Nop.Services.Discounts;
 using Nop.Services.Orders;
 using Nop.Services.Tests.Payments;
-using Nop.Services.Tests.Shipping;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Orders
@@ -26,18 +26,18 @@ namespace Nop.Services.Tests.Orders
     [TestFixture]
     public class OrderTotalCalculationServiceTests : ServiceTest
     {
-        private IOrderTotalCalculationService orderTotalCalcService;
-        private IProductService productService;
-        private ICustomerService customerService;
-        private IDiscountService discountService;
-        private TaxSettings taxSettings;
-        private ISettingService settingService;
-        private IShoppingCartService shoppingCartService;
-        private ShoppingCartSettings shoppingCartSettings;
-        private RewardPointsSettings rewardPointsSettings;
+        private IOrderTotalCalculationService _orderTotalCalcService;
+        private IProductService _productService;
+        private ICustomerService _customerService;
+        private IDiscountService _discountService;
+        private TaxSettings _taxSettings;
+        private ISettingService _settingService;
+        private IShoppingCartService _shoppingCartService;
+        private ShoppingCartSettings _shoppingCartSettings;
+        private RewardPointsSettings _rewardPointsSettings;
 
-        private Discount discount;
-        private Customer customer;
+        private Discount _discount;
+        private Customer _customer;
 
         #region Utilities
 
@@ -54,11 +54,11 @@ namespace Nop.Services.Tests.Orders
                 HasTierPrices = true
             };
 
-            productService.InsertProduct(product);
+            _productService.InsertProduct(product);
 
             var shoppingCartItem = new ShoppingCartItem
             {
-                CustomerId = customer.Id,
+                CustomerId = _customer.Id,
                 ProductId = product.Id,
                 Quantity = quantity
             };
@@ -72,17 +72,17 @@ namespace Nop.Services.Tests.Orders
             {
                 var sci1 = new ShoppingCartItem
                 {
-                    ProductId = productService.GetProductBySku("FR_451_RB").Id,
+                    ProductId = _productService.GetProductBySku("FR_451_RB").Id,
                     Quantity = 2
                 };
                 var sci2 = new ShoppingCartItem
                 {
-                    ProductId = productService.GetProductBySku("FIRST_PRP").Id,
+                    ProductId = _productService.GetProductBySku("FIRST_PRP").Id,
                     Quantity = 3
                 };
 
                 var cart = new List<ShoppingCartItem> { sci1, sci2 };
-                cart.ForEach(sci => sci.CustomerId = customer.Id);
+                cart.ForEach(sci => sci.CustomerId = _customer.Id);
 
                 return cart;
             }
@@ -98,27 +98,27 @@ namespace Nop.Services.Tests.Orders
             TypeDescriptor.AddAttributes(typeof(List<string>),
                 new TypeConverterAttribute(typeof(GenericListTypeConverter<string>)));
 
-            settingService = GetService<ISettingService>();
+            _settingService = GetService<ISettingService>();
 
             var shippingSettings = GetService<ShippingSettings>();
             shippingSettings.ActiveShippingRateComputationMethodSystemNames.Add("FixedRateTestShippingRateComputationMethod");
-            taxSettings = GetService<TaxSettings>();
-            taxSettings.ActiveTaxProviderSystemName = "FixedTaxRateTest";
-            taxSettings.ShippingIsTaxable = true;
-            settingService.SaveSetting(shippingSettings);
-            settingService.SaveSetting(taxSettings);
+            _taxSettings = GetService<TaxSettings>();
+            _taxSettings.ActiveTaxProviderSystemName = "FixedTaxRateTest";
+            _taxSettings.ShippingIsTaxable = true;
+            _settingService.SaveSetting(shippingSettings);
+            _settingService.SaveSetting(_taxSettings);
 
-            orderTotalCalcService = GetService<IOrderTotalCalculationService>();
-            productService = GetService<IProductService>();
-            customerService = GetService<ICustomerService>();
-            discountService = GetService<IDiscountService>();
-            shoppingCartService = GetService<IShoppingCartService>();
+            _orderTotalCalcService = GetService<IOrderTotalCalculationService>();
+            _productService = GetService<IProductService>();
+            _customerService = GetService<ICustomerService>();
+            _discountService = GetService<IDiscountService>();
+            _shoppingCartService = GetService<IShoppingCartService>();
 
-            shoppingCartSettings = GetService<ShoppingCartSettings>();
+            _shoppingCartSettings = GetService<ShoppingCartSettings>();
 
-            rewardPointsSettings = GetService<RewardPointsSettings>();
+            _rewardPointsSettings = GetService<RewardPointsSettings>();
 
-            discount = new Discount
+            _discount = new Discount
             {
                 Name = "Discount 1",
                 DiscountType = DiscountType.AssignedToOrderSubTotal,
@@ -126,9 +126,9 @@ namespace Nop.Services.Tests.Orders
                 DiscountLimitation = DiscountLimitationType.Unlimited
             };
 
-            customer = customerService.GetCustomerByEmail("test@nopCommerce.com");
+            _customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
 
-            GetService<IGenericAttributeService>().SaveAttribute(customer,
+            GetService<IGenericAttributeService>().SaveAttribute(_customer,
                 NopCustomerDefaults.SelectedPaymentMethodAttribute, "Payments.TestMethod", 1);
         }
 
@@ -140,35 +140,35 @@ namespace Nop.Services.Tests.Orders
             var shippingSettings = GetService<ShippingSettings>();
             shippingSettings.ActiveShippingRateComputationMethodSystemNames.Clear();
 
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = false;
-            taxSettings.ActiveTaxProviderSystemName = string.Empty;
-            taxSettings.ShippingIsTaxable = false;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = false;
+            _taxSettings.ActiveTaxProviderSystemName = string.Empty;
+            _taxSettings.ShippingIsTaxable = false;
             settingService.SaveSetting(shippingSettings);
-            settingService.SaveSetting(taxSettings);
+            settingService.SaveSetting(_taxSettings);
 
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-            product = productService.GetProductBySku("FIRST_PRP");
+            product = _productService.GetProductBySku("FIRST_PRP");
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-            GetService<IGenericAttributeService>().SaveAttribute<string>(customer, NopCustomerDefaults.SelectedPaymentMethodAttribute, null, 1);
+            GetService<IGenericAttributeService>().SaveAttribute<string>(_customer, NopCustomerDefaults.SelectedPaymentMethodAttribute, null, 1);
             
             foreach (var item in GetService<IRepository<Discount>>().Table.Where(d => d.Name == "Discount 1").ToList()) 
-                discountService.DeleteDiscount(item);
+                _discountService.DeleteDiscount(item);
 
-            productService.DeleteProducts(GetService<IRepository<Product>>().Table.Where(p => p.Name == "Product name 1").ToList());
+            _productService.DeleteProducts(GetService<IRepository<Product>>().Table.Where(p => p.Name == "Product name 1").ToList());
         }
 
         [Test]
         public void CanGetShoppingCartSubTotalExcludingTax()
         {
             //10% - default tax rate
-            orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, false,
+            _orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, false,
                 out var discountAmount, out var appliedDiscounts,
                 out var subTotalWithoutDiscount, out var subTotalWithDiscount, out var taxRates);
             discountAmount.Should().Be(0);
@@ -183,7 +183,7 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShoppingCartSubTotalIncludingTax()
         {
-            orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, true,
+            _orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, true,
                 out var discountAmount, out var appliedDiscounts,
                 out var subTotalWithoutDiscount, out var subTotalWithDiscount, out var taxRates);
             discountAmount.Should().Be(0);
@@ -198,14 +198,14 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShoppingCartSubtotalDiscountExcludingTax()
         {
-            discountService.InsertDiscount(discount);
+            _discountService.InsertDiscount(_discount);
 
             //10% - default tax rate
-            orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, false,
+            _orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, false,
                 out var discountAmount, out var appliedDiscounts,
                 out var subTotalWithoutDiscount, out var subTotalWithDiscount, out var taxRates);
 
-            discountService.DeleteDiscount(discount);
+            _discountService.DeleteDiscount(_discount);
 
             discountAmount.Should().Be(3);
             appliedDiscounts.Count.Should().Be(1);
@@ -220,14 +220,14 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShoppingCartSubtotalDiscountIncludingTax()
         {
-            discountService.InsertDiscount(discount);
+            _discountService.InsertDiscount(_discount);
 
-            orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, true,
+            _orderTotalCalcService.GetShoppingCartSubTotal(ShoppingCart, true,
                 out var discountAmount, out var appliedDiscounts,
                 out var subTotalWithoutDiscount, out var subTotalWithDiscount,
                 out var taxRates);
 
-            discountService.DeleteDiscount(discount);
+            _discountService.DeleteDiscount(_discount);
 
             //The comparison test failed before, because of a very tiny number difference.
             //discountAmount.ShouldEqual(3.3);
@@ -244,75 +244,75 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShoppingCartItemAdditionalShippingCharge()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.AdditionalShippingCharge = 21.25M;
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
-            var additionalShippingCharge = orderTotalCalcService.GetShoppingCartAdditionalShippingCharge(ShoppingCart);
+            _productService.UpdateProduct(product);
+            var additionalShippingCharge = _orderTotalCalcService.GetShoppingCartAdditionalShippingCharge(ShoppingCart);
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
             additionalShippingCharge.Should().Be(42.5M);
         }
 
         [Test]
         public void ShippingShouldBeFreeWhenAllShoppingCartItemsAreMarkedAsFreeShipping()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-            productService.GetProductBySku("FIRST_PRP");
+            _productService.GetProductBySku("FIRST_PRP");
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-            orderTotalCalcService.IsFreeShipping(ShoppingCart).Should().BeTrue();
+            _orderTotalCalcService.IsFreeShipping(ShoppingCart).Should().BeTrue();
         }
 
         [Test]
         public void ShippingShouldNotBeFreeWhenSomeOfShoppingCartItemsAreNotMarkedAsFreeShipping()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
-            var isFreeShipping = orderTotalCalcService.IsFreeShipping(ShoppingCart);
+            _productService.UpdateProduct(product);
+            var isFreeShipping = _orderTotalCalcService.IsFreeShipping(ShoppingCart);
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
             isFreeShipping.Should().BeFalse();
         }
 
         [Test]
         public void ShippingShouldBeFreeWhenCustomerIsInRoleWithFreeShipping()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
-            var role = customerService.GetCustomerRoleBySystemName(NopCustomerDefaults.AdministratorsRoleName);
+            _productService.UpdateProduct(product);
+            var role = _customerService.GetCustomerRoleBySystemName(NopCustomerDefaults.AdministratorsRoleName);
             role.FreeShipping = true;
-            customerService.UpdateCustomerRole(role);
-            var isFreeShipping = orderTotalCalcService.IsFreeShipping(ShoppingCart);
+            _customerService.UpdateCustomerRole(role);
+            var isFreeShipping = _orderTotalCalcService.IsFreeShipping(ShoppingCart);
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
             role.FreeShipping = false;
-            customerService.UpdateCustomerRole(role);
+            _customerService.UpdateCustomerRole(role);
             isFreeShipping.Should().BeTrue();
         }
 
         [Test]
         public void CanGetShippingTotalWithFixedShippingRateExcludingTax()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.AdditionalShippingCharge = 21.25M;
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             var shipping =
-                orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, false, out var taxRate,
+                _orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, false, out var taxRate,
                     out var appliedDiscounts);
 
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             shipping.Should().NotBeNull();
             //10 - default fixed shipping rate, 42.5 - additional shipping change
@@ -325,18 +325,18 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShippingTotalWithFixedShippingRateIncludingTax()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.AdditionalShippingCharge = 21.25M;
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             var shipping =
-                orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, true, out var taxRate,
+                _orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, true, out var taxRate,
                     out var appliedDiscounts);
 
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             shipping.Should().NotBeNull();
             //10 - default fixed shipping rate, 42.5 - additional shipping change
@@ -349,23 +349,23 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShippingTotalDiscountExcludingTax()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.AdditionalShippingCharge = 21.25M;
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-            discount.DiscountType = DiscountType.AssignedToShipping;
-            discountService.InsertDiscount(discount);
+            _discount.DiscountType = DiscountType.AssignedToShipping;
+            _discountService.InsertDiscount(_discount);
 
             var shipping =
-                orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, false, out var taxRate,
+                _orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, false, out var taxRate,
                     out var appliedDiscounts);
 
-            discountService.DeleteDiscount(discount);
-            discount.DiscountType = DiscountType.AssignedToOrderSubTotal;
+            _discountService.DeleteDiscount(_discount);
+            _discount.DiscountType = DiscountType.AssignedToOrderSubTotal;
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             appliedDiscounts.Count.Should().Be(1);
             appliedDiscounts.First().Name.Should().Be("Discount 1");
@@ -379,23 +379,23 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShippingTotalDiscountIncludingTax()
         {
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.AdditionalShippingCharge = 21.25M;
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
-            discount.DiscountType = DiscountType.AssignedToShipping;
-            discountService.InsertDiscount(discount);
+            _discount.DiscountType = DiscountType.AssignedToShipping;
+            _discountService.InsertDiscount(_discount);
 
             var shipping =
-                orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, true, out var taxRate,
+                _orderTotalCalcService.GetShoppingCartShippingTotal(ShoppingCart, true, out var taxRate,
                     out var appliedDiscounts);
 
-            discountService.DeleteDiscount(discount);
-            discount.DiscountType = DiscountType.AssignedToOrderSubTotal;
+            _discountService.DeleteDiscount(_discount);
+            _discount.DiscountType = DiscountType.AssignedToOrderSubTotal;
             product.AdditionalShippingCharge = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             appliedDiscounts.Count.Should().Be(1);
             appliedDiscounts.First().Name.Should().Be("Discount 1");
@@ -412,15 +412,15 @@ namespace Nop.Services.Tests.Orders
             //207 - items, 10 - shipping (fixed), 20 - payment fee
 
             TestPaymentMethod.AdditionalHandlingFee = 20M;
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             //1. shipping is taxable, payment fee is taxable
-            taxSettings.ShippingIsTaxable = true;
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
+            _taxSettings.ShippingIsTaxable = true;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
 
-            settingService.SaveSetting(taxSettings);
+            _settingService.SaveSetting(_taxSettings);
 
             GetService<IOrderTotalCalculationService>().GetTaxTotal(ShoppingCart, out var taxRates).Should().Be(23.7M);
             taxRates.Should().NotBeNull();
@@ -429,8 +429,8 @@ namespace Nop.Services.Tests.Orders
             taxRates[10].Should().Be(23.7M);
 
             //2. shipping is taxable, payment fee is not taxable
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = false;
-            settingService.SaveSetting(taxSettings);
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = false;
+            _settingService.SaveSetting(_taxSettings);
 
             GetService<IOrderTotalCalculationService>().GetTaxTotal(ShoppingCart, out taxRates).Should().Be(21.7M);
             taxRates.Should().NotBeNull();
@@ -439,9 +439,9 @@ namespace Nop.Services.Tests.Orders
             taxRates[10].Should().Be(21.7M);
 
             //3. shipping is not taxable, payment fee is taxable
-            taxSettings.ShippingIsTaxable = false;
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
-            settingService.SaveSetting(taxSettings);
+            _taxSettings.ShippingIsTaxable = false;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
+            _settingService.SaveSetting(_taxSettings);
 
             GetService<IOrderTotalCalculationService>().GetTaxTotal(ShoppingCart, out taxRates).Should().Be(22.7M);
             taxRates.Should().NotBeNull();
@@ -450,9 +450,9 @@ namespace Nop.Services.Tests.Orders
             taxRates[10].Should().Be(22.7M);
 
             //4. shipping is not taxable, payment fee is not taxable
-            taxSettings.ShippingIsTaxable = false;
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = false;
-            settingService.SaveSetting(taxSettings);
+            _taxSettings.ShippingIsTaxable = false;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = false;
+            _settingService.SaveSetting(_taxSettings);
 
             GetService<IOrderTotalCalculationService>().GetTaxTotal(ShoppingCart, out taxRates).Should().Be(20.7M);
             taxRates.Should().NotBeNull();
@@ -461,23 +461,23 @@ namespace Nop.Services.Tests.Orders
             taxRates[10].Should().Be(20.7M);
 
             TestPaymentMethod.AdditionalHandlingFee = 0M;
-            product = productService.GetProductBySku("FR_451_RB");
+            product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
         }
 
         [Test]
         public void CanGetShoppingCartTotalWithoutShippingRequired()
         {
             //shipping is taxable, payment fee is taxable
-            taxSettings.ShippingIsTaxable = true;
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
-            settingService.SaveSetting(taxSettings);
+            _taxSettings.ShippingIsTaxable = true;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
+            _settingService.SaveSetting(_taxSettings);
 
             TestPaymentMethod.AdditionalHandlingFee = 20M;
 
             //207 - items, 20 - payment fee, 22.7 - tax
-            orderTotalCalcService.GetShoppingCartTotal(ShoppingCart, out _, out _, out _, out _, out _)
+            _orderTotalCalcService.GetShoppingCartTotal(ShoppingCart, out _, out _, out _, out _, out _)
                 .Should().Be(249.7M);
 
             TestPaymentMethod.AdditionalHandlingFee = 0M;
@@ -487,36 +487,36 @@ namespace Nop.Services.Tests.Orders
         public void CanGetShoppingCartTotalWithShippingRequired()
         {
             //shipping is taxable, payment fee is taxable
-            taxSettings.ShippingIsTaxable = true;
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
+            _taxSettings.ShippingIsTaxable = true;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
 
-            settingService.SaveSetting(taxSettings);
+            _settingService.SaveSetting(_taxSettings);
 
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             TestPaymentMethod.AdditionalHandlingFee = 20M;
 
             //207 - items, 10 - shipping (fixed), 20 - payment fee, 23.7 - tax
-            orderTotalCalcService.GetShoppingCartTotal(ShoppingCart, out _, out _, out _, out _, out _)
+            _orderTotalCalcService.GetShoppingCartTotal(ShoppingCart, out _, out _, out _, out _, out _)
                 .Should().Be(260.7M);
 
             TestPaymentMethod.AdditionalHandlingFee = 0M;
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
         }
 
         [Test]
         public void CanGetShoppingCartItemUnitprice()
         {
-            shoppingCartService.GetUnitPrice(ShoppingCart[0]).Should().Be(new decimal(27.0));
+            _shoppingCartService.GetUnitPrice(ShoppingCart[0]).Should().Be(new decimal(27.0));
         }
 
         [Test]
         public void CanGetShoppingCartItemSubtotal()
         {
-            shoppingCartService.GetSubTotal(ShoppingCart[0]).Should().Be(new decimal(54.0));
+            _shoppingCartService.GetSubTotal(ShoppingCart[0]).Should().Be(new decimal(54.0));
         }
 
         [Test]
@@ -530,8 +530,8 @@ namespace Nop.Services.Tests.Orders
             var shoppingCartItem = CreateTestShopCartItem(inputPrice);
 
             // act
-            shoppingCartSettings.RoundPricesDuringCalculation = true;
-            settingService.SaveSetting(shoppingCartSettings);
+            _shoppingCartSettings.RoundPricesDuringCalculation = true;
+            _settingService.SaveSetting(_shoppingCartSettings);
 
             var resultPrice = GetService<IShoppingCartService>().GetUnitPrice(shoppingCartItem);
 
@@ -550,8 +550,8 @@ namespace Nop.Services.Tests.Orders
             var shoppingCartItem = CreateTestShopCartItem(inputPrice);
 
             // act
-            shoppingCartSettings.RoundPricesDuringCalculation = false;
-            settingService.SaveSetting(shoppingCartSettings);
+            _shoppingCartSettings.RoundPricesDuringCalculation = false;
+            _settingService.SaveSetting(_shoppingCartSettings);
 
             var resultPrice = GetService<IShoppingCartService>().GetUnitPrice(shoppingCartItem);
 
@@ -562,30 +562,30 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanGetShoppingCartTotalDiscount()
         {
-            discount.DiscountType = DiscountType.AssignedToOrderTotal;
+            _discount.DiscountType = DiscountType.AssignedToOrderTotal;
 
-            discountService.InsertDiscount(discount);
+            _discountService.InsertDiscount(_discount);
 
             //shipping is taxable, payment fee is taxable
-            taxSettings.ShippingIsTaxable = true;
-            taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
+            _taxSettings.ShippingIsTaxable = true;
+            _taxSettings.PaymentMethodAdditionalFeeIsTaxable = true;
 
-            settingService.SaveSetting(taxSettings);
+            _settingService.SaveSetting(_taxSettings);
 
             TestPaymentMethod.AdditionalHandlingFee = 20M;
 
-            var product = productService.GetProductBySku("FR_451_RB");
+            var product = _productService.GetProductBySku("FR_451_RB");
             product.IsFreeShipping = false;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             //207 - items, 10 - shipping (fixed), 20 - payment fee, 23.7 - tax, [-3] - discount
             var scTotal = GetService<IOrderTotalCalculationService>().GetShoppingCartTotal(ShoppingCart, out var discountAmount, out var appliedDiscounts, out _, out _, out _);
-            discountService.DeleteDiscount(discount);
-            discount.DiscountType = DiscountType.AssignedToOrderSubTotal;
+            _discountService.DeleteDiscount(_discount);
+            _discount.DiscountType = DiscountType.AssignedToOrderSubTotal;
             TestPaymentMethod.AdditionalHandlingFee = 0M;
 
             product.IsFreeShipping = true;
-            productService.UpdateProduct(product);
+            _productService.UpdateProduct(product);
 
             scTotal.Should().Be(257.7M);
             discountAmount.Should().Be(3);
@@ -596,10 +596,10 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanConvertRewardPointsToAmount()
         {
-            rewardPointsSettings.Enabled = true;
-            rewardPointsSettings.ExchangeRate = 15M;
+            _rewardPointsSettings.Enabled = true;
+            _rewardPointsSettings.ExchangeRate = 15M;
 
-            settingService.SaveSetting(rewardPointsSettings);
+            _settingService.SaveSetting(_rewardPointsSettings);
 
             GetService<IOrderTotalCalculationService>().ConvertRewardPointsToAmount(100).Should().Be(1500);
         }
@@ -607,10 +607,10 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanConvertAmountToRewardPoints()
         {
-            rewardPointsSettings.Enabled = true;
-            rewardPointsSettings.ExchangeRate = 15M;
+            _rewardPointsSettings.Enabled = true;
+            _rewardPointsSettings.ExchangeRate = 15M;
 
-            settingService.SaveSetting(rewardPointsSettings);
+            _settingService.SaveSetting(_rewardPointsSettings);
             //we calculate ceiling for reward points
             GetService<IOrderTotalCalculationService>().ConvertAmountToRewardPoints(100).Should().Be(7);
         }
@@ -618,17 +618,17 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanCheckMinimumRewardPointsToUseRequirement()
         {
-            rewardPointsSettings.Enabled = true;
-            rewardPointsSettings.MinimumRewardPointsToUse = 0;
+            _rewardPointsSettings.Enabled = true;
+            _rewardPointsSettings.MinimumRewardPointsToUse = 0;
 
-            settingService.SaveSetting(rewardPointsSettings);
+            _settingService.SaveSetting(_rewardPointsSettings);
 
             GetService<IOrderTotalCalculationService>().CheckMinimumRewardPointsToUseRequirement(0).Should().BeTrue();
             GetService<IOrderTotalCalculationService>().CheckMinimumRewardPointsToUseRequirement(1).Should().BeTrue();
             GetService<IOrderTotalCalculationService>().CheckMinimumRewardPointsToUseRequirement(10).Should().BeTrue();
 
-            rewardPointsSettings.MinimumRewardPointsToUse = 2;
-            settingService.SaveSetting(rewardPointsSettings);
+            _rewardPointsSettings.MinimumRewardPointsToUse = 2;
+            _settingService.SaveSetting(_rewardPointsSettings);
 
             GetService<IOrderTotalCalculationService>().CheckMinimumRewardPointsToUseRequirement(0).Should().BeFalse();
             GetService<IOrderTotalCalculationService>().CheckMinimumRewardPointsToUseRequirement(1).Should().BeFalse();

@@ -6,6 +6,7 @@ using Nop.Core.Domain.Tax;
 using Nop.Services.Configuration;
 using Nop.Services.Customers;
 using Nop.Services.Tax;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Tax
@@ -37,7 +38,7 @@ namespace Nop.Services.Tests.Tax
 
             var adminRole = _customerService.GetCustomerRoleBySystemName(NopCustomerDefaults.AdministratorsRoleName);
             _defaultAdminRoleTaxExempt = adminRole.TaxExempt;
-            var admin = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var admin = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             _defaultAdminTaxExempt = admin.IsTaxExempt;
         }
 
@@ -52,7 +53,7 @@ namespace Nop.Services.Tests.Tax
             adminRole.Active = true;
             _customerService.UpdateCustomerRole(adminRole);
 
-            var admin = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var admin = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             admin.IsTaxExempt = _defaultAdminTaxExempt;
             _customerService.UpdateCustomer(admin);
         }
@@ -106,7 +107,7 @@ namespace Nop.Services.Tests.Tax
         [Test]
         public void CanCheckTaxExemptCustomerInTaxExemptCustomerRole()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             customer.IsTaxExempt = false;
             _customerService.UpdateCustomer(customer);
 

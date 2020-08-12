@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Nop.Core.Tests.Infrastructure
 {
     [TestFixture]
-    public class TypeFinderTests:BaseNopTest
+    public class TypeFinderTests : BaseNopTest
     {
         [Test]
         public void TypeFinderBenchmarkFindings()

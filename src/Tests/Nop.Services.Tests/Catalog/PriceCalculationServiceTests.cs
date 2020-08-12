@@ -7,6 +7,7 @@ using Nop.Core.Domain.Directory;
 using Nop.Core.Domain.Discounts;
 using Nop.Services.Catalog;
 using Nop.Services.Customers;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Catalog
@@ -66,20 +67,19 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanGetFinalProductPriceWithTierPricesByCustomerRole()
         {
-
             var product = _productService.GetProductBySku("NK_ZSJ_MM");
 
             //customer
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             var customerRole = _customerService.GetAllCustomerRoles().FirstOrDefault();
 
             customerRole.Should().NotBeNull();
 
             var tierPrices = new List<TierPrice>
             {
-                new TierPrice {CustomerRoleId = customerRole.Id, ProductId = product.Id, Quantity = 2, Price = 25},
-                new TierPrice {CustomerRoleId = customerRole.Id, ProductId = product.Id, Quantity = 5, Price = 20},
-                new TierPrice {CustomerRoleId = customerRole.Id, ProductId = product.Id, Quantity = 10, Price = 15}
+                new TierPrice { CustomerRoleId = customerRole.Id, ProductId = product.Id, Quantity = 2, Price = 25 },
+                new TierPrice { CustomerRoleId = customerRole.Id, ProductId = product.Id, Quantity = 5, Price = 20 },
+                new TierPrice { CustomerRoleId = customerRole.Id, ProductId = product.Id, Quantity = 10, Price = 15 }
             };
 
             foreach (var tierPrice in tierPrices) 
@@ -120,7 +120,7 @@ namespace Nop.Services.Tests.Catalog
         public void CanGetFinalProductPriceWithDiscount()
         {
             var product = _productService.GetProductBySku("BP_20_WSP");
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
 
             var mapping = new DiscountProductMapping
             {

@@ -9,12 +9,24 @@ namespace Nop.Core.Tests.Infrastructure.DependencyManagement
     [TestFixture]
     public class AutofacTests
     {
-        public interface IFoo { }
-        public class Foo1 : IFoo { }
-        public class Foo2 : IFoo { }
-        public class Foo3 : IFoo { }
+        public interface IFoo
+        {
+        }
 
-        [Test(Description = "Exercises a problem in a previous version, to make sure older Autofac.dll isn't picked up")]
+        public class Foo1 : IFoo
+        {
+        }
+
+        public class Foo2 : IFoo
+        {
+        }
+
+        public class Foo3 : IFoo
+        {
+        }
+
+        [Test(Description =
+            "Exercises a problem in a previous version, to make sure older Autofac.dll isn't picked up")]
         public void EnumerablesFromDifferentLifetimeScopesShouldReturnDifferentCollections()
         {
             var rootBuilder = new ContainerBuilder();

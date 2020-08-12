@@ -54,7 +54,7 @@ namespace Nop.Services.Tests.Messages
         [Test]
         public void VerifyInsertEventIsFired()
         {
-            var subscription = new NewsLetterSubscription {Email = "test@test.com"};
+            var subscription = new NewsLetterSubscription { Email = "test@test.com" };
 
             _newsLetterSubscriptionService.InsertNewsLetterSubscription(subscription);
 
@@ -65,7 +65,7 @@ namespace Nop.Services.Tests.Messages
             eventType.Should().Be(typeof(EntityInsertedEvent<NewsLetterSubscription>));
         }
 
-        public class NewsLetterSubscriptionConsumer: IConsumer<EmailSubscribedEvent>, IConsumer<EmailUnsubscribedEvent>, IConsumer<EntityInsertedEvent<NewsLetterSubscription>>
+        public class NewsLetterSubscriptionConsumer : IConsumer<EmailSubscribedEvent>, IConsumer<EmailUnsubscribedEvent>, IConsumer<EntityInsertedEvent<NewsLetterSubscription>>
         {
             public static Type LastEventType { get; set; }
 

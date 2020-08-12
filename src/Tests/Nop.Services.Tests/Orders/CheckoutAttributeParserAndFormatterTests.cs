@@ -111,7 +111,7 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanAddAndParseCheckoutAttributes()
         {
-            var attributes = "";
+            var attributes = string.Empty;
             //color: green
             attributes = _checkoutAttributeParser.AddCheckoutAttribute(attributes, _ca1, _cav11.Id.ToString());
             //custom option: option 1, option 2
@@ -136,7 +136,7 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanAddRenderAttributesWithoutPrices()
         {
-            var attributes = "";
+            var attributes = string.Empty;
             //color: green
             attributes = _checkoutAttributeParser.AddCheckoutAttribute(attributes, _ca1, _cav11.Id.ToString());
             //custom option: option 1, option 2
@@ -157,7 +157,7 @@ namespace Nop.Services.Tests.Orders
         [Test]
         public void CanAddAndRemoveCheckoutAttributes()
         {
-            var attributes = "";
+            var attributes = string.Empty;
             //color: green
             attributes = _checkoutAttributeParser.AddCheckoutAttribute(attributes, _ca1, _cav11.Id.ToString());
             //custom option: option 1, option 2

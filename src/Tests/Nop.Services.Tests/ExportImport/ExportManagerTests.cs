@@ -22,6 +22,7 @@ using Nop.Services.Orders;
 using Nop.Services.Shipping.Date;
 using Nop.Services.Tax;
 using Nop.Services.Vendors;
+using Nop.Tests;
 using NUnit.Framework;
 using OfficeOpenXml;
 
@@ -47,7 +48,6 @@ namespace Nop.Services.Tests.ExportImport
         private ITaxCategoryService _taxCategoryService;
         private IVendorService _vendorService;
 
-
         #endregion
 
         #region Setup
@@ -71,13 +71,13 @@ namespace Nop.Services.Tests.ExportImport
             _vendorService = GetService<IVendorService>();
 
             GetService<IGenericAttributeService>()
-                .SaveAttribute(_customerService.GetCustomerByEmail("test@nopCommerce.com"), "category-advanced-mode",
+                .SaveAttribute(_customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail), "category-advanced-mode",
                     true);
             GetService<IGenericAttributeService>()
-                .SaveAttribute(_customerService.GetCustomerByEmail("test@nopCommerce.com"), "manufacturer-advanced-mode",
+                .SaveAttribute(_customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail), "manufacturer-advanced-mode",
                     true);
             GetService<IGenericAttributeService>()
-                .SaveAttribute(_customerService.GetCustomerByEmail("test@nopCommerce.com"), "product-advanced-mode",
+                .SaveAttribute(_customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail), "product-advanced-mode",
                     true);
         }
 
@@ -85,13 +85,13 @@ namespace Nop.Services.Tests.ExportImport
         public void TearDown()
         {
             GetService<IGenericAttributeService>()
-                .SaveAttribute(_customerService.GetCustomerByEmail("test@nopCommerce.com"), "category-advanced-mode",
+                .SaveAttribute(_customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail), "category-advanced-mode",
                     false);
             GetService<IGenericAttributeService>()
-                .SaveAttribute(_customerService.GetCustomerByEmail("test@nopCommerce.com"), "manufacturer-advanced-mode",
+                .SaveAttribute(_customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail), "manufacturer-advanced-mode",
                     false);
             GetService<IGenericAttributeService>()
-                .SaveAttribute(_customerService.GetCustomerByEmail("test@nopCommerce.com"), "product-advanced-mode",
+                .SaveAttribute(_customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail), "product-advanced-mode",
                     false);
         }
 
@@ -129,7 +129,7 @@ namespace Nop.Services.Tests.ExportImport
                     objectPropertyValue = ((DateTime)objectPropertyValue).ToOADate();
 
                 if (objectProperty.PropertyType == typeof(DateTime?)) 
-                    objectPropertyValue = ((DateTime?) objectPropertyValue)?.ToOADate();
+                    objectPropertyValue = ((DateTime?)objectPropertyValue)?.ToOADate();
 
                 property.PropertyValue.Should().Be(objectPropertyValue, $"The property \"{typeof(T).Name}.{property.PropertyName}\" of these objects is not equal");
             }
@@ -254,7 +254,7 @@ namespace Nop.Services.Tests.ExportImport
 
             const string shippingPattern = "Shipping";
             replacePairs = addressFields.ToDictionary(p => shippingPattern + p, p => p);
-            var testShippingAddress = _addressService.GetAddressById(order.ShippingAddressId??0);
+            var testShippingAddress = _addressService.GetAddressById(order.ShippingAddressId ?? 0);
             PropertiesShouldEqual(testShippingAddress, manager, replacePairs, "CreatedOnUtc", "ShippingCountry");
             manager.GetProperties.First(p => p.PropertyName == "ShippingCountry").PropertyValue.Should().Be(_countryService.GetCountryByAddress(testShippingAddress).Name);
         }

@@ -6,6 +6,7 @@ using Nop.Services.Common;
 using Nop.Services.Configuration;
 using Nop.Services.Customers;
 using Nop.Services.Helpers;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Helpers
@@ -46,7 +47,7 @@ namespace Nop.Services.Tests.Helpers
             _dateTimeHelper = GetService<IDateTimeHelper>();
             _settingService = GetService<ISettingService>();
 
-            _customer = GetService<ICustomerService>().GetCustomerByEmail("test@nopCommerce.com");
+            _customer = GetService<ICustomerService>().GetCustomerByEmail(NopTestsDefaults.AdminEmail);
 
             _defaultTimeZone = _genericAttributeService.GetAttribute<string>(_customer, NopCustomerDefaults.TimeZoneIdAttribute);
 

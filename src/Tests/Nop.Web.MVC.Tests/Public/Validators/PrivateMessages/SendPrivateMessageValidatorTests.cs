@@ -25,7 +25,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.PrivateMessages
                 Subject = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Subject, model);
-            model.Subject = "";
+            model.Subject = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Subject, model);
         }
 
@@ -47,7 +47,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.PrivateMessages
                 Message = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Message, model);
-            model.Message = "";
+            model.Message = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Message, model);
         }
 

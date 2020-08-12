@@ -37,7 +37,7 @@ namespace Nop.Services.Tests.Payments
         [Test]
         public void CanLoadActivePaymentMethods()
         {
-            var paymentMethods = _paymentPluginManager.LoadActivePlugins(new List<string>{ "Payments.TestMethod" });
+            var paymentMethods = _paymentPluginManager.LoadActivePlugins(new List<string> { "Payments.TestMethod" });
             paymentMethods.Should().NotBeNull();
             paymentMethods.Any().Should().BeTrue();
         }
@@ -45,7 +45,7 @@ namespace Nop.Services.Tests.Payments
         [Test]
         public void CanGetMaskedCreditCardNumber()
         {
-            _paymentService.GetMaskedCreditCardNumber("").Should().Be("");
+            _paymentService.GetMaskedCreditCardNumber(string.Empty).Should().Be(string.Empty);
             _paymentService.GetMaskedCreditCardNumber("123").Should().Be("123");
             _paymentService.GetMaskedCreditCardNumber("1234567890123456").Should().Be("************3456");
         }
@@ -98,7 +98,7 @@ namespace Nop.Services.Tests.Payments
 
             deserialized.ContainsKey("key2").Should().BeTrue();
             //deserialized["key2"].Should().Be(null);
-            deserialized["key2"].Should().Be("");
+            deserialized["key2"].Should().Be(string.Empty);
 
             deserialized.ContainsKey("key3").Should().BeTrue();
             deserialized["key3"].Should().Be("3");

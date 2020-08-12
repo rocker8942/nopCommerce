@@ -25,7 +25,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Boards
                 Subject = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Subject, model);
-            model.Subject = "";
+            model.Subject = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Subject, model);
         }
 
@@ -47,7 +47,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Boards
                 Text = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Text, model);
-            model.Text = "";
+            model.Text = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Text, model);
         }
 

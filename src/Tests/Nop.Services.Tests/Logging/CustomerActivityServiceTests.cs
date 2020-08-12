@@ -2,6 +2,7 @@
 using FluentAssertions;
 using Nop.Services.Customers;
 using Nop.Services.Logging;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Logging
@@ -22,7 +23,7 @@ namespace Nop.Services.Tests.Logging
         [Test]
         public void CanFindActivities()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
 
             var activities = _customerActivityService.GetAllActivities(customerId: customer.Id, pageSize: 10);
             activities.Any().Should().BeTrue();

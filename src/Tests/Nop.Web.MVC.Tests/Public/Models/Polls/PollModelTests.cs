@@ -9,7 +9,7 @@ namespace Nop.Web.MVC.Tests.Public.Models.Polls
     {
         [Test]
         public void CanClone()
-        {	    
+        {
             //create
             var model1 = new PollModel
             {

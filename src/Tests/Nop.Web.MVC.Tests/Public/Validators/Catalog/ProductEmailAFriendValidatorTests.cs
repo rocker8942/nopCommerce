@@ -12,7 +12,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Catalog
         private ProductEmailAFriendValidator _validator;
         
         [SetUp]
-        public  void Setup()
+        public void Setup()
         {
             _validator = GetService<ProductEmailAFriendValidator>();
         }
@@ -25,7 +25,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Catalog
                 FriendEmail = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.FriendEmail, model);
-            model.FriendEmail = "";
+            model.FriendEmail = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.FriendEmail, model);
         }
 
@@ -57,7 +57,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Catalog
                 YourEmailAddress = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.YourEmailAddress, model);
-            model.YourEmailAddress = "";
+            model.YourEmailAddress = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.YourEmailAddress, model);
         }
 

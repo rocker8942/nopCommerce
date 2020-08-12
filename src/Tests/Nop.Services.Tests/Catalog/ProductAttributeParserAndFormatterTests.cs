@@ -25,19 +25,19 @@ namespace Nop.Services.Tests.Catalog
 
             _productAttributeMappings =
                 productAttributeService.GetProductAttributeMappingsByProductId(GetService<IProductService>()
-                    .GetProductBySku("COMP_CUST").Id).Select(p=> KeyValuePair.Create(p, productAttributeService.GetProductAttributeValues(p.Id)));
+                    .GetProductBySku("COMP_CUST").Id).Select(p => KeyValuePair.Create(p, productAttributeService.GetProductAttributeValues(p.Id)));
         }
 
         [Test]
         public void CanAddAndParseProductAttributes()
         {
-            var attributes = "";
+            var attributes = string.Empty;
 
             foreach (var productAttributeMapping in _productAttributeMappings)
             {
                 var skip = true;
 
-                foreach (var productAttributeValue in productAttributeMapping.Value.OrderBy(p=>p.Id))
+                foreach (var productAttributeValue in productAttributeMapping.Value.OrderBy(p => p.Id))
                 {
                     if (skip)
                     {
@@ -49,7 +49,7 @@ namespace Nop.Services.Tests.Catalog
                 }
             }
 
-            var parsedAttributeValues = _productAttributeParser.ParseProductAttributeValues(attributes).Select(p=>p.Id).ToList();
+            var parsedAttributeValues = _productAttributeParser.ParseProductAttributeValues(attributes).Select(p => p.Id).ToList();
 
             foreach (var productAttributeMapping in _productAttributeMappings)
             {
@@ -72,7 +72,7 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanAddAndRemoveProductAttributes()
         {
-            var attributes = "";
+            var attributes = string.Empty;
 
             var delete = false;
 
@@ -81,7 +81,7 @@ namespace Nop.Services.Tests.Catalog
                 foreach (var productAttributeValue in productAttributeMapping.Value.OrderBy(p => p.Id)) 
                     attributes = _productAttributeParser.AddProductAttribute(attributes, productAttributeMapping.Key, productAttributeValue.Id.ToString());
 
-                if(delete)
+                if (delete)
                     attributes = _productAttributeParser.RemoveProductAttribute(attributes, productAttributeMapping.Key);
 
                 delete = !delete;
@@ -103,7 +103,7 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanRenderAttributesWithoutPrices()
         {
-            var attributes = "";
+            var attributes = string.Empty;
 
             foreach (var productAttributeMapping in _productAttributeMappings)
                 foreach (var productAttributeValue in productAttributeMapping.Value.OrderBy(p => p.Id))
@@ -132,7 +132,7 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanAddAndParseGiftCardAttributes()
         {
-            var attributes = "";
+            var attributes = string.Empty;
             attributes = _productAttributeParser.AddGiftCardAttribute(attributes,
                 "recipientName 1", "recipientEmail@gmail.com",
                 "senderName 1", "senderEmail@gmail.com", "custom message");
@@ -153,7 +153,7 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanRenderVirtualGiftCart()
         {
-            var attributes = _productAttributeParser.AddGiftCardAttribute("",
+            var attributes = _productAttributeParser.AddGiftCardAttribute(string.Empty,
                 "recipientName 1", "recipientEmail@gmail.com",
                 "senderName 1", "senderEmail@gmail.com", "custom message");
 
@@ -171,7 +171,7 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanRenderPhysicalGiftCart()
         {
-            var attributes = _productAttributeParser.AddGiftCardAttribute("",
+            var attributes = _productAttributeParser.AddGiftCardAttribute(string.Empty,
                 "recipientName 1", "recipientEmail@gmail.com",
                 "senderName 1", "senderEmail@gmail.com", "custom message");
 
@@ -187,4 +187,3 @@ namespace Nop.Services.Tests.Catalog
         }
     }
 }
-

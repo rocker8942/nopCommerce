@@ -1,12 +1,13 @@
 ﻿using FluentAssertions;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Customers;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Customers
 {
     [TestFixture]
-    public class CustomerServiceTests: ServiceTest
+    public class CustomerServiceTests : ServiceTest
     {
         private ICustomerService _customerService;
 
@@ -30,7 +31,7 @@ namespace Nop.Services.Tests.Customers
         [Test]
         public void CanCheckIsInCustomerRole()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
 
             _customerService.IsInCustomerRole(customer, NopCustomerDefaults.AdministratorsRoleName, false).Should().BeTrue();
             _customerService.IsInCustomerRole(customer, NopCustomerDefaults.AdministratorsRoleName).Should().BeTrue();
@@ -45,14 +46,14 @@ namespace Nop.Services.Tests.Customers
         [Test]
         public void CanCheckWhetherCustomerIsAdmin()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             _customerService.IsAdmin(customer).Should().BeTrue();
         }
 
         [Test]
         public void CanCheckWhetherCustomerIsForumModerator()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             _customerService.IsForumModerator(customer, false).Should().BeTrue();
         }
 
@@ -66,7 +67,7 @@ namespace Nop.Services.Tests.Customers
         [Test]
         public void CanCheckWhetherCustomerIsRegistered()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
 
             _customerService.IsRegistered(customer).Should().BeTrue();
         }
@@ -74,7 +75,7 @@ namespace Nop.Services.Tests.Customers
         [Test]
         public void CanRemoveAddressAssignedAsBillingAddress()
         {
-            var customer = _customerService.GetCustomerByEmail("test@nopCommerce.com");
+            var customer = _customerService.GetCustomerByEmail(NopTestsDefaults.AdminEmail);
             var addresses = _customerService.GetAddressesByCustomerId(customer.Id);
 
             addresses.Count.Should().Be(1);

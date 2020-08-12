@@ -58,7 +58,7 @@ namespace Nop.Services.Tests.Discounts
             return new Customer
             {
                 CustomerGuid = Guid.NewGuid(),
-                AdminComment = "",
+                AdminComment = string.Empty,
                 Active = true,
                 Deleted = false,
                 CreatedOnUtc = new DateTime(2010, 01, 01),
@@ -80,7 +80,6 @@ namespace Nop.Services.Tests.Discounts
                 DiscountLimitation = DiscountLimitationType.Unlimited
             };
         }
-
 
         [Test]
         public void ShouldNotAcceptWrongDiscountCode()

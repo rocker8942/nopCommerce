@@ -161,7 +161,6 @@ namespace Nop.Services.Tests.Payments
             return null;
         }
 
-
         #endregion
 
         #region Properties
@@ -216,15 +215,15 @@ namespace Nop.Services.Tests.Payments
 
         #region Test data
 
-        public static bool TestSupportCapture = false;
+        public static bool TestSupportCapture { get; set; } = false;
 
-        public static bool TestSupportRefund = false;
+        public static bool TestSupportRefund { get; set; } = false;
 
-        public static bool TestSupportPartiallyRefund = false;
+        public static bool TestSupportPartiallyRefund { get; set; } = false;
 
-        public static bool TestSupportVoid = false;
+        public static bool TestSupportVoid { get; set; } = false;
 
-        public static decimal AdditionalHandlingFee = decimal.Zero;
+        public static decimal AdditionalHandlingFee { get; set; } = decimal.Zero;
 
         #endregion
     }

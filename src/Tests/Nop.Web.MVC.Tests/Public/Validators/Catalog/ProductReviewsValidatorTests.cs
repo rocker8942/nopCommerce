@@ -20,32 +20,32 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Catalog
         [Test]
         public void ShouldHaveErrorWhenTitleIsNullOrEmpty()
         {
-            var model = new ProductReviewsModel {AddProductReview = {Title = null}};
+            var model = new ProductReviewsModel { AddProductReview = { Title = null } };
             _validator.ShouldHaveValidationErrorFor(x => x.AddProductReview.Title, model);
-            model.AddProductReview.Title = "";
+            model.AddProductReview.Title = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.AddProductReview.Title, model);
         }
 
         [Test]
         public void ShouldNotHaveErrorWhenTitleIsSpecified()
         {
-            var model = new ProductReviewsModel {AddProductReview = {Title = "some comment"}};
+            var model = new ProductReviewsModel { AddProductReview = { Title = "some comment" } };
             _validator.ShouldNotHaveValidationErrorFor(x => x.AddProductReview.Title, model);
         }
 
         [Test]
         public void ShouldHaveErrorWhenReviewTextIsNullOrEmpty()
         {
-            var model = new ProductReviewsModel {AddProductReview = {ReviewText = null}};
+            var model = new ProductReviewsModel { AddProductReview = { ReviewText = null } };
             _validator.ShouldHaveValidationErrorFor(x => x.AddProductReview.ReviewText, model);
-            model.AddProductReview.ReviewText = "";
+            model.AddProductReview.ReviewText = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.AddProductReview.ReviewText, model);
         }
 
         [Test]
         public void ShouldNotHaveErrorWhenReviewTextIsSpecified()
         {
-            var model = new ProductReviewsModel {AddProductReview = {ReviewText = "some comment"}};
+            var model = new ProductReviewsModel { AddProductReview = { ReviewText = "some comment" } };
             _validator.ShouldNotHaveValidationErrorFor(x => x.AddProductReview.ReviewText, model);
         }
     }

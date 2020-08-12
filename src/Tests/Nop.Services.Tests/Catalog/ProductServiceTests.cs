@@ -18,7 +18,7 @@ namespace Nop.Services.Tests.Catalog
         #region SetUp
 
         [SetUp]
-        public new void SetUp()
+        public void SetUp()
         {
             _productService = GetService<IProductService>();
 
@@ -185,7 +185,7 @@ namespace Nop.Services.Tests.Catalog
         [Test]
         public void CanCalculateTotalQuantityWhenWeDoNotUseMultipleWarehouses()
         {
-            var result = _productService.GetTotalStockQuantity(new Product{StockQuantity = 6, ManageInventoryMethod = ManageInventoryMethod.ManageStock});
+            var result = _productService.GetTotalStockQuantity(new Product { StockQuantity = 6, ManageInventoryMethod = ManageInventoryMethod.ManageStock });
             result.Should().Be(6);
         }
 

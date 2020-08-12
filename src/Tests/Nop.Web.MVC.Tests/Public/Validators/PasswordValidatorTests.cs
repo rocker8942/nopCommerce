@@ -123,7 +123,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators
             _validator.RuleFor(x => x.Password).IsPassword(_localizationService, _customerSettings);
 
             //ShouldHaveValidationError
-            _validator.ShouldHaveValidationErrorFor(x => x.Password, _person.Password = "");
+            _validator.ShouldHaveValidationErrorFor(x => x.Password, _person.Password = string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.Password, _person.Password = "123");
             _validator.ShouldHaveValidationErrorFor(x => x.Password, _person.Password = "12345678");
             _validator.ShouldHaveValidationErrorFor(x => x.Password, _person.Password = "nopcommerce");

@@ -3,6 +3,7 @@ using FluentAssertions;
 using Nop.Core.Domain.Customers;
 using Nop.Services.Customers;
 using Nop.Services.Security;
+using Nop.Tests;
 using NUnit.Framework;
 
 namespace Nop.Services.Tests.Customers
@@ -67,7 +68,7 @@ namespace Nop.Services.Tests.Customers
         [Test]
         public void EnsureOnlyRegisteredCustomersCanLogin()
         {
-            var result = _customerRegistrationService.ValidateCustomer("test@nopCommerce.com", "test_password");
+            var result = _customerRegistrationService.ValidateCustomer(NopTestsDefaults.AdminEmail, NopTestsDefaults.AdminPassword);
             result.Should().Be(CustomerLoginResults.Successful);
 
             var customer = CreateCustomer(PasswordFormat.Clear, false);
@@ -81,7 +82,7 @@ namespace Nop.Services.Tests.Customers
         [Test]
         public void CanValidateHashedPassword()
         {
-            var result = _customerRegistrationService.ValidateCustomer("test@nopCommerce.com", "test_password");
+            var result = _customerRegistrationService.ValidateCustomer(NopTestsDefaults.AdminEmail, NopTestsDefaults.AdminPassword);
             result.Should().Be(CustomerLoginResults.Successful);
         }
 

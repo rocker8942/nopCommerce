@@ -31,13 +31,12 @@ namespace Nop.Services.Tests.Common
 
             Assert.That(createdOrUpdatedDate,
                 Is.EqualTo(DateTime.UtcNow).Within(1).Minutes);
-
         }
 
         [Test]
         public void ShouldUpdateCreatedOrUpdatedDateUtcInUpdateAttribute()
         {
-            var attribute = new Core.Domain.Common.GenericAttribute {Key = "test", KeyGroup = "test", Value = "test"};
+            var attribute = new Core.Domain.Common.GenericAttribute { Key = "test", KeyGroup = "test", Value = "test" };
 
             _genericAttributeService.InsertAttribute(attribute);
             attribute.CreatedOrUpdatedDateUTC = DateTime.UtcNow.AddDays(-30);

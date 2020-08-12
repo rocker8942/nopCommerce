@@ -379,7 +379,6 @@ namespace Nop.Services.Tests.Orders
                 OrderTotal = 100,
                 RefundedAmount = 30, //100-30=70 can be refunded
                 PaymentMethodSystemName = "Payments.TestMethod"
-
             };
 
             TestPaymentMethod.TestSupportPartiallyRefund = true;

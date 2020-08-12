@@ -25,7 +25,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Common
                 Email = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Email, model);
-            model.Email = "";
+            model.Email = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Email, model);
         }
 
@@ -57,7 +57,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Common
                 FullName = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.FullName, model);
-            model.FullName = "";
+            model.FullName = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.FullName, model);
         }
 
@@ -79,7 +79,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Common
                 Enquiry = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Enquiry, model);
-            model.Enquiry = "";
+            model.Enquiry = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Enquiry, model);
         }
 

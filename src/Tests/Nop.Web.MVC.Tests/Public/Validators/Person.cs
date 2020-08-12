@@ -2,7 +2,7 @@
 {
     public class Person
     {
-        public string NameField;
+        public string NameField { get; set; }
 
         public string Username { get; set; }
        

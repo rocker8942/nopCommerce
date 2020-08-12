@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Nop.Web.MVC.Tests.Events
 {
     [TestFixture]
-    public class EventsTests:BaseNopTest
+    public class EventsTests : BaseNopTest
     {
         private IEventPublisher _eventPublisher;
 

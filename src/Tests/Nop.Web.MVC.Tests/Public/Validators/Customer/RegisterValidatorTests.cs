@@ -28,7 +28,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Customer
                 Email = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.Email, model);
-            model.Email = "";
+            model.Email = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.Email, model);
         }
 
@@ -67,7 +67,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Customer
                 FirstName = null
             };
             validator.ShouldHaveValidationErrorFor(x => x.FirstName, model);
-            model.FirstName = "";
+            model.FirstName = string.Empty;
             validator.ShouldHaveValidationErrorFor(x => x.FirstName, model);
         }
 
@@ -105,7 +105,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Customer
             };
 
             validator.ShouldHaveValidationErrorFor(x => x.LastName, model);
-            model.LastName = "";
+            model.LastName = string.Empty;
             validator.ShouldHaveValidationErrorFor(x => x.LastName, model);
         }
 
@@ -136,7 +136,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Customer
             //we know that password should equal confirmation password
             model.ConfirmPassword = model.Password;
             _validator.ShouldHaveValidationErrorFor(x => x.Password, model);
-            model.Password = "";
+            model.Password = string.Empty;
             //we know that password should equal confirmation password
             model.ConfirmPassword = model.Password;
             _validator.ShouldHaveValidationErrorFor(x => x.Password, model);
@@ -162,7 +162,7 @@ namespace Nop.Web.MVC.Tests.Public.Validators.Customer
                 ConfirmPassword = null
             };
             _validator.ShouldHaveValidationErrorFor(x => x.ConfirmPassword, model);
-            model.ConfirmPassword = "";
+            model.ConfirmPassword = string.Empty;
             _validator.ShouldHaveValidationErrorFor(x => x.ConfirmPassword, model);
         }
 

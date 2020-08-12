@@ -65,10 +65,10 @@ namespace Nop.Services.Tests.Shipping
                 Items =
                 {
                     new GetShippingOptionRequest.PackageItem(
-                        new ShoppingCartItem {AttributesXml = "", Quantity = 3, ProductId = product1.Id},
+                        new ShoppingCartItem { AttributesXml = string.Empty, Quantity = 3, ProductId = product1.Id },
                         product1),
                     new GetShippingOptionRequest.PackageItem(
-                        new ShoppingCartItem {AttributesXml = "", Quantity = 4, ProductId = product2.Id},
+                        new ShoppingCartItem { AttributesXml = string.Empty, Quantity = 4, ProductId = product2.Id },
                         product2)
                 }
             };

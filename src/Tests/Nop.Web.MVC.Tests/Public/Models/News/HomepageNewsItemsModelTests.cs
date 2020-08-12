@@ -10,7 +10,7 @@ namespace Nop.Web.MVC.Tests.Public.Models.News
     {
         [Test]
         public void CanClone()
-        {	    
+        { 
             //create
             var model1 = new HomepageNewsItemsModel
             {
