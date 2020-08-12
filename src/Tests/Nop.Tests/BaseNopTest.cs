@@ -82,9 +82,7 @@ namespace Nop.Tests
 
             Singleton<DataSettings>.Instance = new DataSettings
             {
-                ConnectionString = "Data Source=nopCommerceTest.sqlite;Cache=Shared",
-                //ConnectionString = "Data Source=e:\\test.sql",
-                DataProvider = DataProviderType.SqLite
+                ConnectionString = "Data Source=nopCommerceTest.sqlite;Mode=Memory;Cache=Shared"
             };
             
             var mAssemblies = typeFinder.FindClassesOfType<AutoReversingMigration>()
@@ -151,7 +149,7 @@ namespace Nop.Tests
             services.AddTransient<IUserAgentHelper, UserAgentHelper>();
 
             //data layer
-            services.AddTransient<IDataProviderManager, DataProviderManager>();
+            services.AddTransient<IDataProviderManager, TestDataProviderManager>();
             services.AddSingleton<INopDataProvider, SqLiteNopDataProvider>();
 
             //repositories
@@ -308,7 +306,7 @@ namespace Nop.Tests
             services
                 // add common FluentMigrator services
                 .AddFluentMigratorCore()
-                .AddScoped<IProcessorAccessor, NopProcessorAccessor>()
+                .AddScoped<IProcessorAccessor, TestProcessorAccessor>()
                 // set accessor for the connection string
                 .AddScoped<IConnectionStringAccessor>(x => DataSettingsManager.LoadSettings())
                 .AddScoped<IMigrationManager, MigrationManager>()
@@ -325,9 +323,6 @@ namespace Nop.Tests
             _serviceProvider = services.BuildServiceProvider();
 
             EngineContext.Replace(new NopTestEngine(_serviceProvider));
-
-            if(File.Exists("nopCommerceTest.sqlite") && File.GetCreationTimeUtc("nopCommerceTest.sqlite").AddDays(1) > DateTime.UtcNow)
-                return;
 
             _serviceProvider.GetService<INopDataProvider>().CreateDatabase(null);
             _serviceProvider.GetService<INopDataProvider>().InitializeDatabase();

@@ -23,8 +23,6 @@ namespace Nop.Data
                     return new MsSqlNopDataProvider();
                 case DataProviderType.MySql:
                     return new MySqlNopDataProvider();
-                case DataProviderType.SqLite:
-                    return new SqLiteNopDataProvider();
                 default:
                     throw new NopException($"Not supported data provider name: '{dataProviderType}'");
             }

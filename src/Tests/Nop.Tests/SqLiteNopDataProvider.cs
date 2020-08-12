@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -16,10 +15,11 @@ using Microsoft.Data.Sqlite;
 using Nop.Core;
 using Nop.Core.ComponentModel;
 using Nop.Core.Infrastructure;
+using Nop.Data;
 using Nop.Data.Mapping;
 using Nop.Data.Migrations;
 
-namespace Nop.Data
+namespace Nop.Tests
 {
     /// <summary>
     /// Represents the SQLite data provider
@@ -68,9 +68,6 @@ namespace Nop.Data
 
         public void CreateDatabase(string collation, int triesToConnect = 10)
         {
-            var database = new SQLiteConnectionStringBuilder(DataSettingsManager.LoadSettings().ConnectionString).DataSource;
-            SQLiteConnection.CreateFile(database);
-
             ExecuteNonQuery("PRAGMA journal_mode=WAL;");
         }
 
@@ -232,8 +229,7 @@ namespace Nop.Data
         /// <returns>Returns true if the database exists.</returns>
         public bool DatabaseExists()
         {
-            var database = new SQLiteConnectionStringBuilder(DataSettingsManager.LoadSettings().ConnectionString).DataSource;
-            return CommonHelper.DefaultFileProvider.FileExists(database);
+            return true;
         }
 
         /// <summary>
