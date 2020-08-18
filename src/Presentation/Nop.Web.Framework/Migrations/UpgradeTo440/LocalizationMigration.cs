@@ -109,35 +109,6 @@ namespace Nop.Web.Framework.Migrations.UpgradeTo440
                 "ShoppingCart.AddToWishlist.Update",
                 "ShoppingCart.UpdateCartItem",
                 "Tax.SelectType",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Added",
-                "Admin.Catalog.Attributes.SpecificationAttributes.AddNew",
-                "Admin.Catalog.Attributes.SpecificationAttributes.BackToList",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Deleted",
-                "Admin.Catalog.Attributes.SpecificationAttributes.EditAttributeDetails",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Fields.DisplayOrder",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Fields.DisplayOrder.Hint",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name.Hint",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name.Required",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Info",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.AddNew",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.EditOptionDetails",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.ColorSquaresRgb",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.ColorSquaresRgb.Hint",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.DisplayOrder",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.DisplayOrder.Hint",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.EnableColorSquaresRgb",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.EnableColorSquaresRgb.Hint",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name.Hint",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name.Required",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.NumberOfAssociatedProducts",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Options.SaveBeforeEdit",
-                "Admin.Catalog.Attributes.SpecificationAttributes.Updated",
-                "Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts",
-                "Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts.Product",
-                "Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts.Published"
             });
 
             localizationService.AddLocaleResource(new Dictionary<string, string>
@@ -146,40 +117,11 @@ namespace Nop.Web.Framework.Migrations.UpgradeTo440
                 ["ActivityLog.AddNewSpecAttributeGroup"] = "Added a new specification attribute group ('{0}')",
                 ["ActivityLog.EditSpecAttributeGroup"] = "Edited a specification attribute group ('{0}')",
                 ["ActivityLog.DeleteSpecAttributeGroup"] = "Deleted a specification attribute group ('{0}')",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Added"] = "The new attribute has been added successfully.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.AddNew"] = "Add a new specification attribute",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.BackToList"] = "back to specification attribute list",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Buttons.AddNew"] = "Add attribute",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Buttons.DeleteSelected"] = "Delete attributes (selected)",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Deleted"] = "The attribute has been deleted successfully.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.EditAttributeDetails"] = "Edit specification attribute details",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.DisplayOrder"] = "Display order",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.DisplayOrder.Hint"] = "The display order of the specification attribute.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.Name"] = "Name",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.Name.Hint"] = "The name of the specification attribute.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.Name.Required"] = "Please provide a name.",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.SpecificationAttributeGroup"] = "Group",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.SpecificationAttributeGroup.Hint"] = "The group of the specification attribute.",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.SpecificationAttributeGroup.None"] = "None",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Info"] = "Attribute info",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options"] = "Options",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.AddNew"] = "Add a new option",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.EditOptionDetails"] = "Edit option details",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.ColorSquaresRgb"] = "RGB color",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.ColorSquaresRgb.Hint"] = "Choose color to be used instead of an option text name (it'll be displayed as \"color square\").",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.DisplayOrder"] = "Display order",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.DisplayOrder.Hint"] = "The display order of the option.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.EnableColorSquaresRgb"] = "Specify color",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.EnableColorSquaresRgb.Hint"] = "Check to choose color to be used instead of an option text name (it'll be displayed as \"color square\").",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.Name"] = "Name",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.Name.Hint"] = "The name of the option.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.Name.Required"] = "Please provide a name.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.NumberOfAssociatedProducts"] = "Number of associated products",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.SaveBeforeEdit"] = "You need to save the specification attribute before you can add options for this specification attribute page.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Updated"] = "The attribute has been updated successfully.",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.UsedByProducts"] = "Used by products",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.UsedByProducts.Product"] = "Product",
-                ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.UsedByProducts.Published"] = "Published",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.Added"] = "The new attribute group has been added successfully.",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.AddNew"] = "Add a new specification attribute group",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.BackToList"] = "back to specification attribute list",
@@ -194,7 +136,56 @@ namespace Nop.Web.Framework.Migrations.UpgradeTo440
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.Fields.Name.Required"] = "Please provide a name.",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.Info"] = "Attribute group info",
                 ["Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttributeGroup.Updated"] = "The attribute group has been updated successfully.",
+                ["Admin.Catalog.Products.SpecificationAttributes.NameFormat"] = "{0} >> {1}",
             });
+
+            // rename locales
+            var localesToRename = new[] {
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Added", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Added" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.AddNew", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.AddNew" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.BackToList", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.BackToList" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Deleted", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Deleted" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.EditAttributeDetails", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.EditAttributeDetails" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Fields.DisplayOrder", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.DisplayOrder" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Fields.DisplayOrder.Hint", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.DisplayOrder.Hint" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.Name" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name.Hint", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.Name.Hint" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Fields.Name.Required", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Fields.Name.Required" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Info", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Info" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.AddNew", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.AddNew" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.EditOptionDetails", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.EditOptionDetails" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.ColorSquaresRgb", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.ColorSquaresRgb" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.ColorSquaresRgb.Hint", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.ColorSquaresRgb.Hint" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.DisplayOrder", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.DisplayOrder" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.DisplayOrder.Hint", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.DisplayOrder.Hint" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.EnableColorSquaresRgb", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.EnableColorSquaresRgb" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.EnableColorSquaresRgb.Hint", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.EnableColorSquaresRgb.Hint" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.Name" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name.Hint", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.Name.Hint" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.Name.Required", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.Name.Required" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.Fields.NumberOfAssociatedProducts", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.Fields.NumberOfAssociatedProducts" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Options.SaveBeforeEdit", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Options.SaveBeforeEdit" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.Updated", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.Updated" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.UsedByProducts" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts.Product", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.UsedByProducts.Product" },
+                new { Name = "Admin.Catalog.Attributes.SpecificationAttributes.UsedByProducts.Published", NewName = "Admin.Catalog.Attributes.SpecificationAttributes.SpecificationAttribute.UsedByProducts.Published" },
+            };
+
+            var languageService = EngineContext.Current.Resolve<ILanguageService>();
+
+            foreach (var lang in languageService.GetAllLanguages(true))
+            {
+                foreach (var locale in localesToRename)
+                {
+                    var lsr = localizationService.GetLocaleStringResourceByName(locale.Name, lang.Id, false);
+                    if (lsr != null)
+                    {
+                        lsr.ResourceName = locale.NewName;
+                        localizationService.UpdateLocaleStringResource(lsr);
+                    }
+                }
+            }
         }
 
         /// <summary>Collects the DOWN migration expressions</summary>

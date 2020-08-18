@@ -165,6 +165,58 @@ namespace Nop.Web.Factories
         #region Utilities
 
         /// <summary>
+        /// Prepare the product specification models
+        /// </summary>
+        /// <param name="product">Product</param>
+        /// <param name="group">Specification attribute group</param>
+        /// <returns>List of product specification model</returns>
+        protected virtual IList<ProductSpecificationAttributeModel> PrepareProductSpecificationAttributeModel(Product product, SpecificationAttributeGroup group)
+        {
+            if (product == null)
+                throw new ArgumentNullException(nameof(product));
+
+            var productSpecificationAttributes = _specificationAttributeService.GetProductSpecificationAttributes(
+                    product.Id, specificationAttributeGroupId: group?.Id, showOnProductPage: true);
+
+            var result = new List<ProductSpecificationAttributeModel>();
+
+            foreach (var psa in productSpecificationAttributes)
+            {
+                var option = _specificationAttributeService.GetSpecificationAttributeOptionById(psa.SpecificationAttributeOptionId);
+
+                var model = result.FirstOrDefault(model => model.Id == option.SpecificationAttributeId);
+                if (model == null)
+                {
+                    var attribute = _specificationAttributeService.GetSpecificationAttributeById(option.SpecificationAttributeId);
+                    model = new ProductSpecificationAttributeModel
+                    {
+                        Id = attribute.Id,
+                        Name = _localizationService.GetLocalized(attribute, x => x.Name)
+                    };
+                    result.Add(model);
+                }
+
+                var value = new ProductSpecificationAttributeValueModel
+                {
+                    AttributeTypeId = psa.AttributeTypeId,
+                    ColorSquaresRgb = option.ColorSquaresRgb,
+                    ValueRaw = psa.AttributeType switch
+                    {
+                        SpecificationAttributeType.Option => WebUtility.HtmlEncode(_localizationService.GetLocalized(option, x => x.Name)),
+                        SpecificationAttributeType.CustomText => WebUtility.HtmlEncode(_localizationService.GetLocalized(psa, x => x.CustomValue)),
+                        SpecificationAttributeType.CustomHtmlText => _localizationService.GetLocalized(psa, x => x.CustomValue),
+                        SpecificationAttributeType.Hyperlink => $"<a href='{psa.CustomValue}' target='_blank'>{psa.CustomValue}</a>",
+                        _ => null
+                    }
+                };
+
+                model.Values.Add(value);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Prepare the product review overview model
         /// </summary>
         /// <param name="product">Product</param>
@@ -1614,78 +1666,27 @@ namespace Nop.Web.Factories
             if (product == null)
                 throw new ArgumentNullException(nameof(product));
 
-            var model = new ProductSpecificationModel
-            {
-                NonGroupedAttributes = PrepareProductSpecificationAttributeModel(product, null)
-            };
+            var model = new ProductSpecificationModel();
 
+            // Add non-grouped attributes first
+            model.Groups.Add(new ProductSpecificationAttributeGroupModel
+            {
+                Attributes = PrepareProductSpecificationAttributeModel(product, null)
+            });
+
+            // Add grouped attributes
             var groups = _specificationAttributeService.GetProductSpecificationAttributeGroups(product.Id);
             foreach (var group in groups)
             {
-                model.GroupedAttributes.Add(new ProductSpecificationAttributeGroupModel
+                model.Groups.Add(new ProductSpecificationAttributeGroupModel
                 {
                     Id = group.Id,
-                    Name = group.Name,
+                    Name = _localizationService.GetLocalized(group, x => x.Name),
                     Attributes = PrepareProductSpecificationAttributeModel(product, group)
                 });
             }
 
             return model;
-        }
-
-        /// <summary>
-        /// Prepare the product specification models
-        /// </summary>
-        /// <param name="product">Product</param>
-        /// <param name="group">Specification attribute group</param>
-        /// <returns>List of product specification model</returns>
-        public virtual IList<ProductSpecificationAttributeModel> PrepareProductSpecificationAttributeModel(Product product, SpecificationAttributeGroup group)
-        {
-            if (product == null)
-                throw new ArgumentNullException(nameof(product));
-
-            return _specificationAttributeService.GetProductSpecificationAttributes(
-                    product.Id, specificationAttributeGroupId: group?.Id, showOnProductPage: true)
-                .Select(psa =>
-                {
-                    var specAttributeOption =
-                        _specificationAttributeService.GetSpecificationAttributeOptionById(
-                            psa.SpecificationAttributeOptionId);
-                    var specAttribute =
-                        _specificationAttributeService.GetSpecificationAttributeById(specAttributeOption
-                            .SpecificationAttributeId);
-
-                    var m = new ProductSpecificationAttributeModel
-                    {
-                        SpecificationAttributeId = specAttribute.Id,
-                        SpecificationAttributeName = _localizationService.GetLocalized(specAttribute, x => x.Name),
-                        ColorSquaresRgb = specAttributeOption.ColorSquaresRgb,
-                        AttributeTypeId = psa.AttributeTypeId
-                    };
-
-                    switch (psa.AttributeType)
-                    {
-                        case SpecificationAttributeType.Option:
-                            m.ValueRaw =
-                                WebUtility.HtmlEncode(
-                                    _localizationService.GetLocalized(specAttributeOption, x => x.Name));
-                            break;
-                        case SpecificationAttributeType.CustomText:
-                            m.ValueRaw =
-                                WebUtility.HtmlEncode(_localizationService.GetLocalized(psa, x => x.CustomValue));
-                            break;
-                        case SpecificationAttributeType.CustomHtmlText:
-                            m.ValueRaw = _localizationService.GetLocalized(psa, x => x.CustomValue);
-                            break;
-                        case SpecificationAttributeType.Hyperlink:
-                            m.ValueRaw = $"<a href='{psa.CustomValue}' target='_blank'>{psa.CustomValue}</a>";
-                            break;
-                        default:
-                            break;
-                    }
-
-                    return m;
-                }).ToList();
         }
 
         #endregion

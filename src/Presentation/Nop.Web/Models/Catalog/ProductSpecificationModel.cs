@@ -1,23 +1,19 @@
 ﻿using System.Collections.Generic;
+using Nop.Web.Framework.Models;
 
 namespace Nop.Web.Models.Catalog
 {
     /// <summary>
     /// Represents a product specification model
     /// </summary>
-    public partial class ProductSpecificationModel
+    public partial class ProductSpecificationModel : BaseNopModel
     {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the specification attribute models without groups
-        /// </summary>
-        public IList<ProductSpecificationAttributeModel> NonGroupedAttributes { get; set; }
-
-        /// <summary>
         /// Gets or sets the grouped specification attribute models
         /// </summary>
-        public IList<ProductSpecificationAttributeGroupModel> GroupedAttributes { get; set; }
+        public IList<ProductSpecificationAttributeGroupModel> Groups { get; set; }
 
         #endregion
 
@@ -25,8 +21,7 @@ namespace Nop.Web.Models.Catalog
 
         public ProductSpecificationModel()
         {
-            NonGroupedAttributes = new List<ProductSpecificationAttributeModel>();
-            GroupedAttributes = new List<ProductSpecificationAttributeGroupModel>();
+            Groups = new List<ProductSpecificationAttributeGroupModel>();
         }
 
         #endregion

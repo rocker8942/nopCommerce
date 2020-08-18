@@ -71,13 +71,5 @@ namespace Nop.Web.Factories
         /// <param name="product">Product</param>
         /// <returns>The product specification model</returns>
         ProductSpecificationModel PrepareProductSpecificationModel(Product product);
-
-        /// <summary>
-        /// Prepare the product specification attribute models
-        /// </summary>
-        /// <param name="product">Product</param>
-        /// <param name="group">Specification attribute group</param>
-        /// <returns>List of product specification attribute model</returns>
-        IList<ProductSpecificationAttributeModel> PrepareProductSpecificationAttributeModel(Product product, SpecificationAttributeGroup group);
     }
 }

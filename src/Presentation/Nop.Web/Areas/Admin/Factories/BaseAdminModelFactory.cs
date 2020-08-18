@@ -128,7 +128,8 @@ namespace Nop.Web.Areas.Admin.Factories
         /// <param name="items">Available items</param>
         /// <param name="withSpecialDefaultItem">Whether to insert the first special item for the default value</param>
         /// <param name="defaultItemText">Default item text; pass null to use "All" text</param>
-        protected virtual void PrepareDefaultItem(IList<SelectListItem> items, bool withSpecialDefaultItem, string defaultItemText = null)
+        /// <param name="defaultItemValue">Default item value; defaults 0</param>
+        protected virtual void PrepareDefaultItem(IList<SelectListItem> items, bool withSpecialDefaultItem, string defaultItemText = null, string defaultItemValue = "0")
         {
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
@@ -137,14 +138,11 @@ namespace Nop.Web.Areas.Admin.Factories
             if (!withSpecialDefaultItem)
                 return;
 
-            //at now we use "0" as the default value
-            const string value = "0";
-
             //prepare item text
             defaultItemText ??= _localizationService.GetResource("Admin.Common.All");
 
             //insert this default item at first
-            items.Insert(0, new SelectListItem { Text = defaultItemText, Value = value });
+            items.Insert(0, new SelectListItem { Text = defaultItemText, Value = defaultItemValue });
         }
 
         /// <summary>
@@ -978,14 +976,17 @@ namespace Nop.Web.Areas.Admin.Factories
                 throw new ArgumentNullException(nameof(items));
 
             //prepare available specification attribute groups
-            var availableSpecificationAttributeGroups = _specificationAttributeService.GetAllSpecificationAttributeGroups();
+            var availableSpecificationAttributeGroups = _specificationAttributeService.GetSpecificationAttributeGroups();
             foreach (var group in availableSpecificationAttributeGroups)
             {
                 items.Add(new SelectListItem { Value = group.Id.ToString(), Text = group.Name });
             }
 
+            // use empty string for nullable field
+            var defaultItemValue = string.Empty;
+
             //insert special item for the default value
-            PrepareDefaultItem(items, withSpecialDefaultItem, defaultItemText);
+            PrepareDefaultItem(items, withSpecialDefaultItem, defaultItemText, defaultItemValue);
         }
 
         #endregion

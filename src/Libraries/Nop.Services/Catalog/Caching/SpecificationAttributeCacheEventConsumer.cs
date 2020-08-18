@@ -17,11 +17,11 @@ namespace Nop.Services.Catalog.Caching
         {
             Remove(NopCatalogDefaults.SpecAttributesWithOptionsCacheKey);
 
-            if (entityEventType == EntityEventType.Delete)
-                RemoveByPrefix(NopCatalogDefaults.ProductSpecificationAttributeAllByProductIdsPrefixCacheKey);
-
             if (entityEventType != EntityEventType.Insert)
+            {
+                RemoveByPrefix(NopCatalogDefaults.ProductSpecificationAttributeAllByProductIdsPrefixCacheKey);
                 RemoveByPrefix(NopCatalogDefaults.ProductSpecificationAttributeGroupAllByProductIdsPrefixCacheKey);
+            }
         }
     }
 }

@@ -6854,6 +6854,12 @@ namespace Nop.Services.Installation
 
         protected virtual void InstallSpecificationAttributes()
         {
+            var sag1 = InsertInstallationData(
+                new SpecificationAttributeGroup
+                {
+                    Name = "System unit"
+                });
+
             var sa1 = InsertInstallationData(
                 new SpecificationAttribute
                 {
@@ -6897,7 +6903,8 @@ namespace Nop.Services.Installation
                 new SpecificationAttribute
                 {
                     Name = "CPU Type",
-                    DisplayOrder = 2
+                    DisplayOrder = 2,
+                    SpecificationAttributeGroupId = sag1.Id
                 });
 
             InsertInstallationData(
@@ -6918,7 +6925,8 @@ namespace Nop.Services.Installation
                 new SpecificationAttribute
                 {
                     Name = "Memory",
-                    DisplayOrder = 3
+                    DisplayOrder = 3,
+                    SpecificationAttributeGroupId = sag1.Id
                 });
 
             InsertInstallationData(
@@ -6945,7 +6953,8 @@ namespace Nop.Services.Installation
                 new SpecificationAttribute
                 {
                     Name = "Hard drive",
-                    DisplayOrder = 5
+                    DisplayOrder = 5,
+                    SpecificationAttributeGroupId = sag1.Id
                 });
 
             InsertInstallationData(

@@ -12,24 +12,11 @@ namespace Nop.Services.Catalog
         #region Specification attribute group
 
         /// <summary>
-        /// Gets all specification attribute groups
-        /// </summary>
-        /// <returns>Specification attribute groups</returns>
-        IList<SpecificationAttributeGroup> GetAllSpecificationAttributeGroups();
-
-        /// <summary>
         /// Gets a specification attribute group
         /// </summary>
         /// <param name="specificationAttributeGroupId">The specification attribute group identifier</param>
         /// <returns>Specification attribute group</returns>
         SpecificationAttributeGroup GetSpecificationAttributeGroupById(int specificationAttributeGroupId);
-
-        /// <summary>
-        /// Gets specification attribute groups
-        /// </summary>
-        /// <param name="specificationAttributeGroupIds">The specification attribute group identifiers</param>
-        /// <returns>Specification attribute groups</returns>
-        IList<SpecificationAttributeGroup> GetSpecificationAttributeGroupByIds(int[] specificationAttributeGroupIds);
 
         /// <summary>
         /// Gets specification attribute groups
@@ -197,13 +184,13 @@ namespace Nop.Services.Catalog
         /// Gets a product specification attribute mapping collection
         /// </summary>
         /// <param name="productId">Product identifier; 0 to load all records</param>
-        /// <param name="specificationAttributeGroupId">Specification attribute group identifier; 0 to load all records; null to load attributes without group</param>
         /// <param name="specificationAttributeOptionId">Specification attribute option identifier; 0 to load all records</param>
         /// <param name="allowFiltering">0 to load attributes with AllowFiltering set to false, 1 to load attributes with AllowFiltering set to true, null to load all attributes</param>
         /// <param name="showOnProductPage">0 to load attributes with ShowOnProductPage set to false, 1 to load attributes with ShowOnProductPage set to true, null to load all attributes</param>
+        /// <param name="specificationAttributeGroupId">Specification attribute group identifier; 0 to load all records; null to load attributes without group</param>
         /// <returns>Product specification attribute mapping collection</returns>
         IList<ProductSpecificationAttribute> GetProductSpecificationAttributes(int productId = 0,
-            int? specificationAttributeGroupId = 0, int specificationAttributeOptionId = 0, bool? allowFiltering = null, bool? showOnProductPage = null);
+            int specificationAttributeOptionId = 0, bool? allowFiltering = null, bool? showOnProductPage = null, int? specificationAttributeGroupId = 0);
 
         /// <summary>
         /// Gets a product specification attribute mapping 

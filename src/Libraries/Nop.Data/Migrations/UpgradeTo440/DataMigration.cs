@@ -1,4 +1,5 @@
-﻿using FluentMigrator;
+﻿using System.Linq;
+using FluentMigrator;
 using Nop.Core.Domain.Logging;
 
 namespace Nop.Data.Migrations.UpgradeTo440
@@ -9,15 +10,15 @@ namespace Nop.Data.Migrations.UpgradeTo440
     {
         #region Fields
 
-        private readonly IRepository<ActivityLogType> _activityLogTypeRepository;
+        private readonly INopDataProvider _dataProvider;
 
         #endregion
 
         #region Ctor
 
-        public DataMigration(IRepository<ActivityLogType> activityLogTypeRepository)
+        public DataMigration(INopDataProvider dataProvider)
         {
-            _activityLogTypeRepository = activityLogTypeRepository;
+            _dataProvider = dataProvider;
         }
 
         #endregion
@@ -27,28 +28,41 @@ namespace Nop.Data.Migrations.UpgradeTo440
         /// </summary>
         public override void Up()
         {
-            var activityLogTypes = new ActivityLogType[]
+            if (!_dataProvider.GetTable<ActivityLogType>().Any(alt => string.Compare(alt.SystemKeyword, "AddNewSpecAttributeGroup", true) == 0))
             {
-                new ActivityLogType
-                {
-                    SystemKeyword = "AddNewSpecAttributeGroup",
-                    Enabled = true,
-                    Name = "Add a new specification attribute group"
-                },
-                new ActivityLogType
-                {
-                    SystemKeyword = "EditSpecAttributeGroup",
-                    Enabled = true,
-                    Name = "Edit a specification attribute group"
-                },
-                new ActivityLogType
-                {
-                    SystemKeyword = "DeleteSpecAttributeGroup",
-                    Enabled = true,
-                    Name = "Delete a specification attribute group"
-                }
-            };
-            _activityLogTypeRepository.Insert(activityLogTypes);
+                _dataProvider.InsertEntity(
+                    new ActivityLogType
+                    {
+                        SystemKeyword = "AddNewSpecAttributeGroup",
+                        Enabled = true,
+                        Name = "Add a new specification attribute group"
+                    }
+                );
+            }
+
+            if (!_dataProvider.GetTable<ActivityLogType>().Any(alt => string.Compare(alt.SystemKeyword, "EditSpecAttributeGroup", true) == 0))
+            {
+                _dataProvider.InsertEntity(
+                    new ActivityLogType
+                    {
+                        SystemKeyword = "EditSpecAttributeGroup",
+                        Enabled = true,
+                        Name = "Edit a specification attribute group"
+                    }
+                );
+            }
+
+            if (!_dataProvider.GetTable<ActivityLogType>().Any(alt => string.Compare(alt.SystemKeyword, "DeleteSpecAttributeGroup", true) == 0))
+            {
+                _dataProvider.InsertEntity(
+                    new ActivityLogType
+                    {
+                        SystemKeyword = "DeleteSpecAttributeGroup",
+                        Enabled = true,
+                        Name = "Delete a specification attribute group"
+                    }
+                );
+            }
         }
 
         public override void Down()

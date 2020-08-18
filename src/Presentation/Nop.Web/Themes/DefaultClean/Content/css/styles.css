@@ -2297,6 +2297,7 @@ label, label + * {
 
 .attribute-squares {
 	font-size: 0;
+  display: inline-block;
 }
 .attribute-squares li {
 	display: inline-block;
