@@ -30,7 +30,7 @@ namespace Nop.Core.Infrastructure
         /// <summary>
         /// Gets or sets service provider
         /// </summary>
-        private IServiceProvider _serviceProvider { get; set; }
+        private IServiceProvider _serviceProvider;
 
         #endregion
 
@@ -74,8 +74,8 @@ namespace Nop.Core.Infrastructure
         /// Register dependencies
         /// </summary>
         /// <param name="containerBuilder">Container builder</param>
-        /// <param name="nopConfig">Nop configuration parameters</param>
-        public virtual void RegisterDependencies(ContainerBuilder containerBuilder, NopConfig nopConfig)
+        /// <param name="appSettings">App settings</param>
+        public virtual void RegisterDependencies(ContainerBuilder containerBuilder, AppSettings appSettings)
         {
             //register engine
             containerBuilder.RegisterInstance(this).As<IEngine>().SingleInstance();
@@ -93,7 +93,7 @@ namespace Nop.Core.Infrastructure
 
             //register all provided dependencies
             foreach (var dependencyRegistrar in instances)
-                dependencyRegistrar.Register(containerBuilder, _typeFinder, nopConfig);
+                dependencyRegistrar.Register(containerBuilder, _typeFinder, appSettings);
         }
 
         /// <summary>
@@ -148,8 +148,7 @@ namespace Nop.Core.Infrastructure
         /// </summary>
         /// <param name="services">Collection of service descriptors</param>
         /// <param name="configuration">Configuration of the application</param>
-        /// <param name="nopConfig">Nop configuration parameters</param>
-        public void ConfigureServices(IServiceCollection services, IConfiguration configuration, NopConfig nopConfig)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             //find startup configurations provided by other assemblies
             _typeFinder = new WebAppTypeFinder();
