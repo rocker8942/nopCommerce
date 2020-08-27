@@ -448,13 +448,12 @@ namespace Nop.Web.Areas.Admin.Factories
                 });
             }
 
-            //check whether there are different plugins which try to override the same service
-            var assemblyName = typeof(IConsumer<>).Assembly.GetName().Name;
+            //check whether there are different plugins which try to override the same interface
             var overridenServices = _componentContext.ComponentRegistry.Registrations.Where(p =>
                     p.Services.Any(s =>
-                        s.Description.StartsWith(assemblyName, StringComparison.InvariantCulture) &&
+                        s.Description.StartsWith("Nop.", StringComparison.InvariantCulture) &&
                         !s.Description.StartsWith(typeof(IConsumer<>).FullName?.Replace("~1", string.Empty) ?? string.Empty,
-                            StringComparison.InvariantCulture))).Where(p=> !p.Target.Activator.LimitType.Assembly.GetName().Name.Equals(assemblyName, StringComparison.CurrentCultureIgnoreCase)).SelectMany(p => p.Services.Select(x =>
+                            StringComparison.InvariantCulture))).SelectMany(p => p.Services.Select(x =>
                     KeyValuePair.Create(x.Description, p.Target.Activator.LimitType.Assembly.GetName().Name)))
                 .GroupBy(p => p.Key, p => p.Value)
                 .Where(p => p.Count() > 1)
