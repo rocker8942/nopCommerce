@@ -29,6 +29,7 @@ namespace Nop.Services.Customers.Caching
         /// <param name="entity">Entity</param>
         protected override void ClearCache(Customer entity)
         {
+            RemoveByPrefix(NopCustomerServicesDefaults.CustomerBySystemNamePrefix);
             RemoveByPrefix(NopCustomerServicesDefaults.CustomerCustomerRolesPrefix);
             RemoveByPrefix(NopCustomerServicesDefaults.CustomerAddressesPrefix);
             RemoveByPrefix(NopEntityCacheDefaults<ShoppingCartItem>.AllPrefix);

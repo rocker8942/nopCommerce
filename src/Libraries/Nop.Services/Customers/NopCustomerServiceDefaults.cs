@@ -30,6 +30,23 @@ namespace Nop.Services.Customers
 
         #region Caching defaults
 
+        #region Customer
+
+        /// <summary>
+        /// Gets a key for caching
+        /// </summary>
+        /// <remarks>
+        /// {0} : system name
+        /// </remarks>
+        public static CacheKey CustomerBySystemNameCacheKey => new CacheKey("Nop.customer.bysystemname.{0}", CustomerBySystemNamePrefix);
+
+        /// <summary>
+        /// Gets a key pattern to clear cache
+        /// </summary>
+        public static string CustomerBySystemNamePrefix => "Nop.customer.bysystemname.";
+
+        #endregion
+
         #region Customer attributes
 
         /// <summary>
