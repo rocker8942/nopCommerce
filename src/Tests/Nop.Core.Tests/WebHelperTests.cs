@@ -42,7 +42,7 @@ namespace Nop.Core.Tests
             _urlHelperFactory.Setup(x => x.GetUrlHelper(_actionContextAccessor.Object.ActionContext))
                 .Returns(new UrlHelper(_actionContextAccessor.Object.ActionContext));
 
-            _webHelper = new WebHelper(new HostingConfig(), _actionContextAccessor.Object, _applicationLifetime.Object, new FakeHttpContextAccessor(_httpContext), _fileProvider.Object, _urlHelperFactory.Object);
+            _webHelper = new WebHelper(new AppSettings(), _actionContextAccessor.Object, _applicationLifetime.Object, new FakeHttpContextAccessor(_httpContext), _urlHelperFactory.Object);
         }
 
         [Test]

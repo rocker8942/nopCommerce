@@ -17,12 +17,11 @@ namespace Nop.Services.Tests
         /// </summary>
         /// <param name="builder">Container builder</param>
         /// <param name="typeFinder">Type finder</param>
-        /// <param name="config">Config</param>
-        public virtual void Register(ContainerBuilder builder, ITypeFinder typeFinder, NopConfig config)
+        /// <param name="appSettings">App settings</param>
+        public void Register(ContainerBuilder builder, ITypeFinder typeFinder, AppSettings appSettings)
         {
             //cache managers
             builder.RegisterType<TestCacheManager>().As<IStaticCacheManager>().Named<IStaticCacheManager>("nop_cache_static").SingleInstance();
-
         }
 
         /// <summary>

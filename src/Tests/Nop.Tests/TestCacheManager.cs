@@ -12,7 +12,7 @@ namespace Nop.Tests
     {
         private bool _disposed;
 
-        public TestCacheManager() : base(new NopConfig())
+        public TestCacheManager() : base(new AppSettings())
         {
 
         }
@@ -40,7 +40,16 @@ namespace Nop.Tests
             var rez = await acquire();
             return rez;
         }
-        
+
+        /// <summary>
+        /// Remove the value with the specified key from the cache
+        /// </summary>
+        /// <param name="cacheKey">Cache key</param>
+        /// <param name="cacheKeyParameters">Parameters to create cache key</param>
+        public void Remove(CacheKey cacheKey, params object[] cacheKeyParameters)
+        {
+        }
+
         /// <summary>
         /// Adds the specified key and object to the cache
         /// </summary>
@@ -61,22 +70,14 @@ namespace Nop.Tests
         }
 
         /// <summary>
-        /// Removes the value with the specified key from the cache
+        /// Remove items by cache key prefix
         /// </summary>
-        /// <param name="key">Key of cached item</param>
-        public virtual void Remove(CacheKey key)
+        /// <param name="prefix">Cache key prefix</param>
+        /// <param name="prefixParameters">Parameters to create cache key prefix</param>
+        public void RemoveByPrefix(string prefix, params object[] prefixParameters)
         {
         }
-
-
-        /// <summary>
-        /// Removes items by key prefix
-        /// </summary>
-        /// <param name="prefix">String key prefix</param>
-        public virtual void RemoveByPrefix(string prefix)
-        {
-        }
-
+        
         /// <summary>
         /// Clear all cache data
         /// </summary>

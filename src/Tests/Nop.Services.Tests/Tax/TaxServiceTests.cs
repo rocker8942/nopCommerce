@@ -3,7 +3,6 @@ using System.Linq;
 using FluentAssertions;
 using Moq;
 using Nop.Core;
-using Nop.Core.Configuration;
 using Nop.Core.Domain.Catalog;
 using Nop.Core.Domain.Common;
 using Nop.Core.Domain.Customers;
@@ -100,7 +99,6 @@ namespace Nop.Services.Tests.Tax
                 null,
                 null,
                 new TestCacheManager(),
-                new NopConfig(), 
                 _storeContext.Object,
                 null);
 

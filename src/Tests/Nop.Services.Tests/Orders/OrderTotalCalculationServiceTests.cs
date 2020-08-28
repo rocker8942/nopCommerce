@@ -181,7 +181,7 @@ namespace Nop.Services.Tests.Orders
                 priceCalculationService: priceCalculationService,
                 shoppingCartSettings: _shoppingCartSettings);
 
-            IShippingService shippingService = new FakeShippingService(customerSerice: _customerService,
+            IShippingService shippingService = new FakeShippingService(customerService: _customerService,
                 genericAttributeService: _genericAttributeService.Object,
                 pickupPluginManager: pickupPluginManager,
                 productService: _productService,

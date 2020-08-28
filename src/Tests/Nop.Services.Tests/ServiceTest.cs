@@ -24,11 +24,9 @@ namespace Nop.Services.Tests
         [SetUp]
         public virtual void SetUp()
         {
-            Singleton<NopConfig>.Instance = new NopConfig
+            Singleton<AppSettings>.Instance = new AppSettings
             {
-                DefaultCacheTime = 60,
-                ShortTermCacheTime = 3,
-                BundledFilesCacheTime = 120
+                CacheConfig = {DefaultCacheTime = 60, ShortTermCacheTime = 3, BundledFilesCacheTime = 120}
             };
         }
 

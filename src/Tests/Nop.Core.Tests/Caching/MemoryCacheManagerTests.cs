@@ -16,12 +16,13 @@ namespace Nop.Core.Tests.Caching
         [SetUp]
         public void Setup()
         {
-            _staticCacheManager = new MemoryCacheManager(new MemoryCache(new MemoryCacheOptions()), new NopConfig());
-            Singleton<NopConfig>.Instance = new NopConfig
+            _staticCacheManager = new MemoryCacheManager(new AppSettings(), new MemoryCache(new MemoryCacheOptions()));
+            Singleton<AppSettings>.Instance = new AppSettings
             {
-                DefaultCacheTime = 60,
-                ShortTermCacheTime = 3,
-                BundledFilesCacheTime = 120
+                CacheConfig = new CacheConfig
+                {
+                    DefaultCacheTime = 60, ShortTermCacheTime = 3, BundledFilesCacheTime = 120
+                }
             };
         }
 
